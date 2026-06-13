@@ -134,19 +134,19 @@ const GLOBAL_CSS = `
   }
   .btn-primary:active { transform: translateY(0); }
 
-  input, textarea {
+  input, textarea, select {
     background: transparent;
     color: #f3f4f6;
     border: none;
     border-bottom: 1px solid #2a2a2a;
     outline: none;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     padding: 14px 0;
     width: 100%;
     transition: border-color 0.2s;
   }
-  input:focus, textarea:focus { border-bottom-color: #ccff80; }
+  input:focus, textarea:focus, select:focus { border-bottom-color: #ccff80; }
   input::placeholder, textarea::placeholder { color: #4b5563; }
 
   /* ── Dynamic Background ── */
@@ -330,15 +330,46 @@ const GLOBAL_CSS = `
     100% { background-position:  200% 0; }
   }
 
-  /* ── Responsive ── */
+  /* ── Responsive: Tablet ── */
+  @media (max-width: 900px) {
+    .section-pad { padding: 90px 40px !important; }
+    .stats-bar { padding: 28px 40px !important; }
+    .footer-pad { padding: 48px 40px !important; }
+    .two-col { gap: 56px !important; }
+  }
+
+  /* ── Responsive: Mobile ── */
   @media (max-width: 768px) {
     .nav-links { display: none !important; }
-    .hero-title { font-size: clamp(32px, 8vw, 56px) !important; }
-    .two-col { grid-template-columns: 1fr !important; }
+    .hero-title { font-size: clamp(30px, 9vw, 52px) !important; }
+    .hero-sub { font-size: 15px !important; }
+    .two-col { grid-template-columns: 1fr !important; gap: 48px !important; }
     .four-col { grid-template-columns: 1fr 1fr !important; }
-    .section-pad { padding: 80px 20px !important; }
-    .contact-grid { grid-template-columns: 1fr !important; }
+    .section-pad { padding: 72px 20px !important; }
+    .stats-bar { padding: 28px 20px !important; }
+    .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+    .footer-pad { padding: 44px 20px !important; }
+    .footer-row { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 24px !important; }
+    .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
     .pricing-grid { grid-template-columns: 1fr !important; }
+    .form-card { padding: 28px !important; }
+    .name-email-row { grid-template-columns: 1fr !important; gap: 24px !important; }
+    .section-header-row { flex-direction: column !important; align-items: flex-start !important; gap: 24px !important; }
+    .services-header { flex-direction: column !important; }
+    .hero-cta { width: 100% !important; }
+    .hero-cta > button, .hero-cta > a { width: 100% !important; justify-content: center !important; }
+    .why-stat-card { left: 0 !important; right: 0 !important; bottom: -16px !important; }
+    .popup-card { padding: 28px !important; }
+    .section-heading-lg { font-size: clamp(30px, 8vw, 44px) !important; }
+  }
+
+  /* ── Responsive: Small Mobile ── */
+  @media (max-width: 420px) {
+    .four-col { grid-template-columns: 1fr !important; }
+    .stats-grid { grid-template-columns: 1fr 1fr !important; }
+    .section-pad { padding: 60px 16px !important; }
+    .form-card { padding: 22px !important; }
+    .popup-card { padding: 22px !important; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -553,7 +584,7 @@ function Hero({ openContact }) {
       <div style={{
         position: "absolute", top: "50%", left: "50%",
         transform: "translate(-50%,-50%)",
-        width: 900, height: 900,
+        width: 900, height: 900, maxWidth: "100vw",
         background: "radial-gradient(circle, rgba(163,230,53,0.06), transparent 55%)",
         pointerEvents: "none",
         animation: "orbFloat3 12s ease-in-out infinite alternate",
@@ -603,14 +634,14 @@ function Hero({ openContact }) {
           for <span className="text-gradient type-cursor">{typed}</span>
         </h1>
 
-        <p style={{
+        <p className="hero-sub" style={{
           maxWidth: 560, margin: "0 auto 56px",
           color: C.onSurfaceVariant, fontSize: 17, lineHeight: 1.75,
         }}>
           Elite digital engineering for startups and enterprises demanding zero-latency performance and superior technical standards.
         </p>
 
-        <div style={{ display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
+        <div className="hero-cta" style={{ display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
           <button className="btn-primary" onClick={openContact} style={{
             padding: "18px 44px", borderRadius: 10,
             fontFamily: "'JetBrains Mono'", fontSize: 12,
@@ -626,7 +657,7 @@ function Hero({ openContact }) {
             fontFamily: "'JetBrains Mono'", fontSize: 12,
             textTransform: "uppercase", letterSpacing: "0.12em",
             background: "rgba(13,13,13,0.5)", transition: "border-color 0.25s, color 0.25s",
-            textDecoration: "none", display: "inline-flex", alignItems: "center",
+            textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center",
           }}
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = C.primary; e.currentTarget.style.color = C.primary; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = C.outline; e.currentTarget.style.color = C.onSurface; }}
@@ -666,13 +697,13 @@ function StatsBar() {
   ];
 
   return (
-    <div ref={ref} style={{
+    <div ref={ref} className="stats-bar" style={{
       padding: "32px 80px",
       borderTop: `1px solid ${C.outlineVariant}`,
       borderBottom: `1px solid ${C.outlineVariant}`,
       background: "rgba(204,255,128,0.02)",
     }}>
-      <div style={{
+      <div className="stats-grid" style={{
         maxWidth: 1280, margin: "0 auto",
         display: "grid", gridTemplateColumns: "repeat(4,1fr)",
         gap: 40,
@@ -750,7 +781,7 @@ function Services() {
       borderBottom: `1px solid ${C.outlineVariant}`,
     }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 72, gap: 32, flexWrap: "wrap" }}>
+        <div className="services-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 72, gap: 32, flexWrap: "wrap" }}>
           <div className="reveal" style={{ maxWidth: 480 }}>
             <span style={{ color: C.primary, fontFamily: "'JetBrains Mono'", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.3em", fontWeight: 700, display: "block", marginBottom: 14 }}>Capabilities</span>
             <h2 style={{ fontFamily: "'Space Grotesk'", fontSize: "clamp(32px,4vw,48px)", fontWeight: 700, letterSpacing: "-0.03em" }}>Precision Engineering</h2>
@@ -778,7 +809,7 @@ function WhyUs() {
       <div className="two-col" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 100, alignItems: "center" }}>
         <div className="reveal-left">
           <span style={{ color: C.primary, fontFamily: "'JetBrains Mono'", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.3em", fontWeight: 700, display: "block", marginBottom: 14 }}>The H2S Edge</span>
-          <h2 style={{ fontFamily: "'Space Grotesk'", fontSize: "clamp(36px,5vw,60px)", fontWeight: 700, lineHeight: 1.05, marginBottom: 36, letterSpacing: "-0.03em" }}>
+          <h2 className="section-heading-lg" style={{ fontFamily: "'Space Grotesk'", fontSize: "clamp(36px,5vw,60px)", fontWeight: 700, lineHeight: 1.05, marginBottom: 36, letterSpacing: "-0.03em" }}>
             Engineering <br /><span className="text-gradient">Excellence.</span>
           </h2>
           <p style={{ fontSize: 16, color: C.onSurfaceVariant, marginBottom: 52, maxWidth: 420, lineHeight: 1.75 }}>
@@ -823,7 +854,7 @@ function WhyUs() {
 />
           </div>
           {/* Floating stat card */}
-          <div style={{
+          <div className="why-stat-card" style={{
             position: "absolute", bottom: -20, left: -24,
             padding: "24px 28px",
             background: "rgba(13,13,13,0.95)",
@@ -903,7 +934,7 @@ function Portfolio() {
   return (
     <section id="portfolio" className="section-pad" style={{ padding: "120px 80px", background: C.surfaceContainer }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 72 }}>
+        <div className="section-header-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 72 }}>
           <div className="reveal">
             <span style={{ color: C.secondary, fontFamily: "'JetBrains Mono'", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.3em", fontWeight: 700, display: "block", marginBottom: 14 }}>Archive</span>
             <h2 style={{ fontFamily: "'Space Grotesk'", fontSize: "clamp(32px,4vw,48px)", fontWeight: 700, letterSpacing: "-0.03em" }}>Case Studies</h2>
@@ -975,7 +1006,7 @@ function Contact() {
       <div className="two-col" style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "start" }}>
         <div className="reveal-left">
           <span style={{ color: C.primary, fontFamily: "'JetBrains Mono'", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.3em", fontWeight: 700, display: "block", marginBottom: 14 }}>Uplink</span>
-          <h2 style={{ fontFamily: "'Space Grotesk'", fontSize: "clamp(36px,5vw,60px)", fontWeight: 700, textTransform: "uppercase", lineHeight: 0.95, marginBottom: 28, letterSpacing: "-0.03em" }}>
+          <h2 className="section-heading-lg" style={{ fontFamily: "'Space Grotesk'", fontSize: "clamp(36px,5vw,60px)", fontWeight: 700, textTransform: "uppercase", lineHeight: 0.95, marginBottom: 28, letterSpacing: "-0.03em" }}>
             Start Your <br /> Sequence
           </h2>
           <p style={{ color: C.onSurfaceVariant, fontSize: 16, maxWidth: 380, lineHeight: 1.75, marginBottom: 48 }}>
@@ -998,14 +1029,14 @@ function Contact() {
                 </div>
                 <div>
                   <p style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, color: C.onSurfaceVariant, textTransform: "uppercase", letterSpacing: "0.2em", fontWeight: 700 }}>{item.label}</p>
-                  <p style={{ fontSize: 14, fontWeight: 500, marginTop: 3, color: C.onSurface }}>{item.value}</p>
+                  <p style={{ fontSize: 14, fontWeight: 500, marginTop: 3, color: C.onSurface, wordBreak: "break-word" }}>{item.value}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="reveal-right" style={{
+        <div className="reveal-right form-card" style={{
           background: C.surfaceContainerHigh, padding: 48,
           border: `1px solid ${C.outlineVariant}`, borderRadius: 20,
           boxShadow: "0 30px 80px rgba(0,0,0,0.4)",
@@ -1014,7 +1045,7 @@ function Contact() {
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1 }} className="shimmer-line" />
 
           {/* Name + Email row */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 28 }}>
+          <div className="name-email-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28, marginBottom: 28 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <label style={{ fontFamily: "'JetBrains Mono'", fontSize: 9, textTransform: "uppercase", letterSpacing: "0.2em", color: C.onSurfaceVariant, fontWeight: 700 }}>Full Name</label>
               <input type="text" placeholder="Your name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
@@ -1040,7 +1071,7 @@ function Contact() {
                   borderBottom: `1px solid ${C.outline}`,
                   outline: "none",
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: 14,
+                  fontSize: 16,
                   padding: "14px 28px 14px 0",
                   appearance: "none",
                   WebkitAppearance: "none",
@@ -1116,9 +1147,9 @@ function Contact() {
 /* ─── FOOTER ─────────────────────────────────────────────────── */
 function Footer() {
   return (
-    <footer style={{ padding: "56px 80px", background: C.surface, borderTop: `1px solid ${C.outlineVariant}` }}>
+    <footer className="footer-pad" style={{ padding: "56px 80px", background: C.surface, borderTop: `1px solid ${C.outlineVariant}` }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 32, marginBottom: 40 }}>
+        <div className="footer-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 32, marginBottom: 40 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <div className="logo-rounded" style={{
               width: 36, height: 36, borderRadius: 10,
@@ -1216,8 +1247,9 @@ function ContactPopup({ open, onClose }) {
       <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}} @keyframes slideUp{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}`}</style>
       <div
         onClick={(e) => e.stopPropagation()}
+        className="popup-card"
         style={{
-          width: "90%", maxWidth: 560,
+          width: "100%", maxWidth: 560,
           maxHeight: "90vh", overflowY: "auto",
           background: C.surfaceContainerHigh,
           border: `1px solid ${C.outline}`,
