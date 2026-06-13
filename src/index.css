@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #080810;
+  color: white;
+  overflow-x: hidden;
+  font-family: Inter, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccff80;
+}
+
+.glass {
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.grid-bg {
+  background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+
+  background-size: 60px 60px;
+
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  from {
+    transform: translate(0,0);
+  }
+  to {
+    transform: translate(-60px,-60px);
+  }
+}
+
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: .18;
+}
+
+.blob1 {
+  width: 500px;
+  height: 500px;
+  background: #825aff;
+
+  animation: float1 12s infinite alternate;
+}
+
+.blob2 {
+  width: 500px;
+  height: 500px;
+  background: #ccff80;
+
+  animation: float2 16s infinite alternate;
+}
+
+@keyframes float1 {
+  from {
+    transform: translate(-100px,-50px);
+  }
+  to {
+    transform: translate(150px,100px);
+  }
+}
+
+@keyframes float2 {
+  from {
+    transform: translate(50px,50px);
+  }
+  to {
+    transform: translate(-150px,-100px);
+  }
+}
