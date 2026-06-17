@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import logo from "../../Public/small-logo.jpeg";
+const logo = "/small-logo.jpeg";
 /* ─── Design Tokens ─────────────────────────────────────────── */
 const C = {
   background: "#0d0d0d",

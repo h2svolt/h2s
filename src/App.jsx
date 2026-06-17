@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import logo from "../public/small-logo.jpeg";
-import Nav from "./components/Nav.jsx";/* ─── Design Tokens ─────────────────────────────────────────── */
-import amlImage from "../public/AML.jpeg";
-import cyberImage from "../public/Cyber-aware.jpeg";
+import Nav from "./components/Nav.jsx";
 import emailjs from "@emailjs/browser";
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+const logo = "/small-logo.jpeg";
+const amlImage = "/AML.jpeg";
+const cyberImage = "/Cyber-aware.jpeg";
 const C = {
   background: "#0D0D0D",
   surface: "#0D0D0D",
