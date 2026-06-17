@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import logo from "../Public/small-logo.jpeg";
+import logo from "../public/small-logo.jpeg";
 import Nav from "./components/Nav.jsx";/* ─── Design Tokens ─────────────────────────────────────────── */
-import amlImage from "../Public/AML.jpeg";
-import cyberImage from "../Public/Cyber-aware.jpeg";
+import amlImage from "../public/AML.jpeg";
+import cyberImage from "../public/Cyber-aware.jpeg";
 import emailjs from "@emailjs/browser";
 const C = {
   background: "#0D0D0D",
