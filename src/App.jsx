@@ -312,12 +312,12 @@ export default function App() {
               <span>Automated vulnerability analysis with verifiable on-chain audit records, pairing Slither static scans with AI-generated remediation summaries.</span>
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
-            <div className="case-image">
+            <div className="case-image crop-right">
               <img src="/Ai-powered-smart-contract-auditor.png" alt="AI-Powered Smart Contract Auditor dashboard" width="1536" height="1024" loading="lazy" />
             </div>
           </article>
 
-          <article className="case-card">
+          <article className="case-image crop-right">
             <div className="case-copy">
               <p>Email security</p>
               <h3>PhishGuard AI</h3>
@@ -329,7 +329,7 @@ export default function App() {
             </div>
           </article>
 
-          <article className="case-card">
+          <article className="case-image crop-right">
             <div className="case-copy">
               <p>Identity & access</p>
               <h3>RFID & QR Authentication System</h3>
