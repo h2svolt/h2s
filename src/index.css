@@ -110,12 +110,15 @@ button, input, textarea, select { font: inherit; }
 .work-title { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 2rem; }
 .work-logo { width: 92px; height: 92px; object-fit: contain; filter: drop-shadow(0 0 20px #2bcdd026); opacity: .88; }
 .case-grid { display: block; }
-.case-card { min-height: 560px; display: grid; grid-template-columns: .68fr 1.32fr; overflow: hidden; background: #0a121b; border: 1px solid var(--line); position: relative; animation: case-fade .5s cubic-bezier(.2, .7, .2, 1) both; }
-.case-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 1.4rem; }
+.case-card { min-height: 560px; display: grid; grid-template-columns: .68fr 1.32fr; overflow: hidden; background: #0a121b; border: 1px solid var(--line); position: relative; animation: case-fade .6s cubic-bezier(.2, .7, .2, 1) both; }
+.case-nav { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
 .case-counter { color: var(--muted); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; }
-.case-next { min-height: 48px; padding: 0 1.3rem; display: inline-flex; align-items: center; gap: .7rem; border: 1px solid #6e675d; color: var(--paper); font-size: .74rem; letter-spacing: .04em; background: transparent; cursor: pointer; transition: transform .2s ease, border-color .2s ease, color .2s ease; }
+.case-next { appearance: none; -webkit-appearance: none; min-height: 48px; padding: 0 1.4rem; display: inline-flex; align-items: center; gap: .7rem; border: 1px solid #6e675d; border-radius: 0; color: var(--paper); font-size: .74rem; letter-spacing: .04em; background-color: transparent; box-shadow: none; cursor: pointer; transition: transform .2s ease, border-color .2s ease, color .2s ease; }
 .case-next:hover { border-color: var(--lime); color: var(--lime); transform: translateY(-2px); }
-@keyframes case-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.case-next:active { transform: translateY(0) scale(.96); }
+.case-next span { display: inline-block; transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+.case-next:hover span { transform: translate(3px, -3px); }
+@keyframes case-fade { from { opacity: 0; transform: translateY(20px) scale(.98); filter: blur(6px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
 .case-card::before { content: ""; position: absolute; z-index: 4; inset: -1px; pointer-events: none; border: 1px solid transparent; background: linear-gradient(110deg, transparent 20%, #d4b966aa 48%, transparent 72%) border-box; -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transform: translateX(-55%); transition: opacity .35s ease, transform .85s cubic-bezier(.2, .7, .2, 1); }
 .case-card:hover::before { opacity: .7; transform: translateX(55%); }
 .case-copy { padding: 2.2rem; display: flex; flex-direction: column; position: relative; z-index: 2; }
