@@ -41,7 +41,7 @@ const caseStudies = [
   },
   {
     eyebrow: "Blockchain security",
-    title: "AI-Powered Smart Contract Auditor",
+    title: "BlockAudit",
     description: "Automated vulnerability analysis with verifiable on-chain audit records, pairing Slither static scans with AI-generated remediation summaries.",
     image: "/Ai-powered-smart-contract-auditor.png",
     alt: "AI-Powered Smart Contract Auditor dashboard",
@@ -57,7 +57,7 @@ const caseStudies = [
   },
   {
     eyebrow: "Identity & access",
-    title: "RFID & QR Authentication System",
+    title: "GateSync",
     description: "Secure attendance and identity verification for institutions, combining RFID and QR scanning with real-time logging and reporting.",
     image: "/RF%20Id%20an%20qr%20auth%20system.png",
     alt: "RFID & QR Authentication attendance dashboard",
