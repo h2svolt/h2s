@@ -65,6 +65,15 @@ const caseStudies = [
   },
 ];
 
+function CasePeek({ data }) {
+  return (
+    <div className="case-peek" aria-hidden="true">
+      <img src={data.image} alt="" width="1536" height="1024" loading="lazy" className={data.cropRight ? "crop-right" : undefined} />
+      <span className="case-peek-label">{data.title}</span>
+    </div>
+  );
+}
+
 async function sendInquiry(inquiry) {
   const payload = {
     name: inquiry.name,
@@ -121,8 +130,11 @@ export default function App() {
   const [formPhase, setFormPhase] = useState(0);
   const [formError, setFormError] = useState("");
   const [caseIndex, setCaseIndex] = useState(0);
+  const caseCount = caseStudies.length;
   const activeCase = caseStudies[caseIndex];
-  const showNextCase = () => setCaseIndex((index) => (index + 1) % caseStudies.length);
+  const prevCase = caseStudies[(caseIndex - 1 + caseCount) % caseCount];
+  const nextCaseData = caseStudies[(caseIndex + 1) % caseCount];
+  const showNextCase = () => setCaseIndex((index) => (index + 1) % caseCount);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -328,18 +340,22 @@ export default function App() {
 
       <section className="section work" id="work">
         <div className="work-heading"><div className="section-label"><span>03</span><p>Selected work</p></div><div className="work-title"><h2>Complex products, made clear.</h2><img className="work-logo" src="/h2svolt-logo.png" alt="" width="92" height="92" aria-hidden="true" /></div></div>
-        <div className="case-grid">
-          <article className="case-card" key={activeCase.title}>
-            <div className="case-copy">
-              <p>{activeCase.eyebrow}</p>
-              <h3>{activeCase.title}</h3>
-              <span>{activeCase.description}</span>
-              <a href="#contact">Discuss a similar platform ↗</a>
-            </div>
-            <div className={activeCase.cropRight ? "case-image crop-right" : "case-image"}>
-              <img src={activeCase.image} alt={activeCase.alt} width="1536" height="1024" loading="lazy" />
-            </div>
-          </article>
+        <div className="case-carousel">
+          <CasePeek data={prevCase} />
+          <div className="case-grid">
+            <article className="case-card" key={activeCase.title}>
+              <div className="case-copy">
+                <p>{activeCase.eyebrow}</p>
+                <h3>{activeCase.title}</h3>
+                <span>{activeCase.description}</span>
+                <a href="#contact">Discuss a similar platform ↗</a>
+              </div>
+              <div className={activeCase.cropRight ? "case-image crop-right" : "case-image"}>
+                <img src={activeCase.image} alt={activeCase.alt} width="1536" height="1024" loading="lazy" />
+              </div>
+            </article>
+          </div>
+          <CasePeek data={nextCaseData} />
         </div>
         <div className="case-nav">
           <span className="case-counter">{String(caseIndex + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}</span>
