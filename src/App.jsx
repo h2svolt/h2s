@@ -317,26 +317,26 @@ export default function App() {
             </div>
           </article>
 
-          <article className="case-image crop-right">
+          <article className="case-card">
             <div className="case-copy">
               <p>Email security</p>
               <h3>PhishGuard AI</h3>
               <span>Adaptive phishing detection for safer inboxes, combining a local ML model with real-time domain reputation and link analysis.</span>
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
-            <div className="case-image">
+            <div className="case-image crop-right">
               <img src="/phishguard%20ai.png" alt="PhishGuard AI inbox analysis dashboard" width="1536" height="1024" loading="lazy" />
             </div>
           </article>
 
-          <article className="case-image crop-right">
+          <article className="case-card">
             <div className="case-copy">
               <p>Identity & access</p>
               <h3>RFID & QR Authentication System</h3>
               <span>Secure attendance and identity verification for institutions, combining RFID and QR scanning with real-time logging and reporting.</span>
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
-            <div className="case-image">
+            <div className="case-image crop-right">
               <img src="/RF%20Id%20an%20qr%20auth%20system.png" alt="RFID & QR Authentication attendance dashboard" width="1536" height="1024" loading="lazy" />
             </div>
           </article>
