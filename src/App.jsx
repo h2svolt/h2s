@@ -313,7 +313,7 @@ export default function App() {
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
             <div className="case-image">
-              <img src="/smart-contract-auditor.png" alt="AI-Powered Smart Contract Auditor dashboard" width="1536" height="1024" loading="lazy" />
+              <img src="/Ai-powered-smart-contract-auditor.png" alt="AI-Powered Smart Contract Auditor dashboard" width="1536" height="1024" loading="lazy" />
             </div>
           </article>
 
@@ -325,7 +325,7 @@ export default function App() {
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
             <div className="case-image">
-              <img src="/phishguard-ai.png" alt="PhishGuard AI inbox analysis dashboard" width="1536" height="1024" loading="lazy" />
+              <img src="/phishguard%20ai.png" alt="PhishGuard AI inbox analysis dashboard" width="1536" height="1024" loading="lazy" />
             </div>
           </article>
 
@@ -337,7 +337,7 @@ export default function App() {
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
             <div className="case-image">
-              <img src="/rfid-qr-auth.png" alt="RFID & QR Authentication attendance dashboard" width="1536" height="1024" loading="lazy" />
+              <img src="/RF%20Id%20an%20qr%20auth%20system.png" alt="RFID & QR Authentication attendance dashboard" width="1536" height="1024" loading="lazy" />
             </div>
           </article>
         </div>
