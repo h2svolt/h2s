@@ -308,7 +308,7 @@ export default function App() {
           <article className="case-card">
             <div className="case-copy">
               <p>Blockchain security</p>
-              <h3>AI-Powered Smart Contract Auditor</h3>
+              <h3>BlockAudit</h3>
               <span>Automated vulnerability analysis with verifiable on-chain audit records, pairing Slither static scans with AI-generated remediation summaries.</span>
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
@@ -332,7 +332,7 @@ export default function App() {
           <article className="case-card">
             <div className="case-copy">
               <p>Identity & access</p>
-              <h3>RFID & QR Authentication System</h3>
+              <h3>GateSync</h3>
               <span>Secure attendance and identity verification for institutions, combining RFID and QR scanning with real-time logging and reporting.</span>
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
