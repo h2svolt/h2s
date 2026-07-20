@@ -24,6 +24,47 @@ const process = [
   ["04", "QA, launch & support", "We test, deploy, document and support the product after release."],
 ];
 
+const caseStudies = [
+  {
+    eyebrow: "Compliance technology",
+    title: "Pak Trace",
+    description: "A blockchain-based AML and KYC framework with AI-supported detection and structured reporting.",
+    image: "/pak-trace.jpeg",
+    alt: "Pak Trace platform interface",
+  },
+  {
+    eyebrow: "Gamified learning",
+    title: "Cyber Quest",
+    description: "An interactive cybersecurity awareness platform built around practice, progress and engagement.",
+    image: "/cyber-quest.jpeg",
+    alt: "Cyber Quest platform interface",
+  },
+  {
+    eyebrow: "Blockchain security",
+    title: "AI-Powered Smart Contract Auditor",
+    description: "Automated vulnerability analysis with verifiable on-chain audit records, pairing Slither static scans with AI-generated remediation summaries.",
+    image: "/Ai-powered-smart-contract-auditor.png",
+    alt: "AI-Powered Smart Contract Auditor dashboard",
+    cropRight: true,
+  },
+  {
+    eyebrow: "Email security",
+    title: "PhishGuard AI",
+    description: "Adaptive phishing detection for safer inboxes, combining a local ML model with real-time domain reputation and link analysis.",
+    image: "/phishguard%20ai.png",
+    alt: "PhishGuard AI inbox analysis dashboard",
+    cropRight: true,
+  },
+  {
+    eyebrow: "Identity & access",
+    title: "RFID & QR Authentication System",
+    description: "Secure attendance and identity verification for institutions, combining RFID and QR scanning with real-time logging and reporting.",
+    image: "/RF%20Id%20an%20qr%20auth%20system.png",
+    alt: "RFID & QR Authentication attendance dashboard",
+    cropRight: true,
+  },
+];
+
 async function sendInquiry(inquiry) {
   const payload = {
     name: inquiry.name,
@@ -38,6 +79,9 @@ async function sendInquiry(inquiry) {
     company_email: "info@h2svolt.com",
   };
 
+  // These identifiers are intentionally public: EmailJS browser keys and
+  // template IDs are included in every client build. Environment variables
+  // can override them for another deployment without changing source.
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "h2s-gmail-service";
   const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "vEekeW-4lTtrBKLqV";
   const userTemplate = import.meta.env.VITE_EMAILJS_TEMPLATE_USER || "template_eamjebv";
@@ -76,6 +120,9 @@ async function sendInquiry(inquiry) {
 export default function App() {
   const [formPhase, setFormPhase] = useState(0);
   const [formError, setFormError] = useState("");
+  const [caseIndex, setCaseIndex] = useState(0);
+  const activeCase = caseStudies[caseIndex];
+  const showNextCase = () => setCaseIndex((index) => (index + 1) % caseStudies.length);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -180,6 +227,7 @@ export default function App() {
       company: String(data.get("company") || ""),
     };
 
+    // Quietly accept bot submissions caught by the hidden field.
     if (inquiry.company) {
       form.reset();
       return;
@@ -281,65 +329,21 @@ export default function App() {
       <section className="section work" id="work">
         <div className="work-heading"><div className="section-label"><span>03</span><p>Selected work</p></div><div className="work-title"><h2>Complex products, made clear.</h2><img className="work-logo" src="/h2svolt-logo.png" alt="" width="92" height="92" aria-hidden="true" /></div></div>
         <div className="case-grid">
-          <article className="case-card">
+          <article className="case-card" key={activeCase.title}>
             <div className="case-copy">
-              <p>Compliance technology</p>
-              <h3>Pak Trace</h3>
-              <span>A blockchain-based AML and KYC framework with AI-supported detection and structured reporting.</span>
+              <p>{activeCase.eyebrow}</p>
+              <h3>{activeCase.title}</h3>
+              <span>{activeCase.description}</span>
               <a href="#contact">Discuss a similar platform ↗</a>
             </div>
-            <div className="case-image">
-              <img src="/pak-trace.jpeg" alt="Pak Trace platform interface" width="1536" height="1024" loading="lazy" />
+            <div className={activeCase.cropRight ? "case-image crop-right" : "case-image"}>
+              <img src={activeCase.image} alt={activeCase.alt} width="1536" height="1024" loading="lazy" />
             </div>
           </article>
-
-          <article className="case-card">
-            <div className="case-copy">
-              <p>Gamified learning</p>
-              <h3>Cyber Quest</h3>
-              <span>An interactive cybersecurity awareness platform built around practice, progress and engagement.</span>
-              <a href="#contact">Discuss a similar platform ↗</a>
-            </div>
-            <div className="case-image">
-              <img src="/cyber-quest.jpeg" alt="Cyber Quest platform interface" width="1536" height="1024" loading="lazy" />
-            </div>
-          </article>
-
-          <article className="case-card">
-            <div className="case-copy">
-              <p>Blockchain security</p>
-              <h3>BlockAudit</h3>
-              <span>Automated vulnerability analysis with verifiable on-chain audit records, pairing Slither static scans with AI-generated remediation summaries.</span>
-              <a href="#contact">Discuss a similar platform ↗</a>
-            </div>
-            <div className="case-image crop-right">
-              <img src="/Ai-powered-smart-contract-auditor.png" alt="AI-Powered Smart Contract Auditor dashboard" width="1536" height="1024" loading="lazy" />
-            </div>
-          </article>
-
-          <article className="case-card">
-            <div className="case-copy">
-              <p>Email security</p>
-              <h3>PhishGuard AI</h3>
-              <span>Adaptive phishing detection for safer inboxes, combining a local ML model with real-time domain reputation and link analysis.</span>
-              <a href="#contact">Discuss a similar platform ↗</a>
-            </div>
-            <div className="case-image crop-right">
-              <img src="/phishguard%20ai.png" alt="PhishGuard AI inbox analysis dashboard" width="1536" height="1024" loading="lazy" />
-            </div>
-          </article>
-
-          <article className="case-card">
-            <div className="case-copy">
-              <p>Identity & access</p>
-              <h3>GateSync</h3>
-              <span>Secure attendance and identity verification for institutions, combining RFID and QR scanning with real-time logging and reporting.</span>
-              <a href="#contact">Discuss a similar platform ↗</a>
-            </div>
-            <div className="case-image crop-right">
-              <img src="/RF%20Id%20an%20qr%20auth%20system.png" alt="RFID & QR Authentication attendance dashboard" width="1536" height="1024" loading="lazy" />
-            </div>
-          </article>
+        </div>
+        <div className="case-nav">
+          <span className="case-counter">{String(caseIndex + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}</span>
+          <button type="button" className="case-next" onClick={showNextCase}>Next case study <span>↗</span></button>
         </div>
       </section>
 
