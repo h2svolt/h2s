@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import "./index.css";
 
@@ -65,11 +65,175 @@ const caseStudies = [
   },
 ];
 
-function CasePeek({ data }) {
+const clients = [
+  { name: "Y-SCENTS", image: "/client-yscents.jpeg", theme: "light" },
+  { name: "Excel", image: "/client-excel.jpeg", theme: "light" },
+  { name: "DreamFyre", image: "/client-dreamfyre.jpeg", theme: "dark" },
+];
+
+function ClientShowcase() {
+  const [activeClient, setActiveClient] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const pointerStart = useRef(null);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion || isPaused) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveClient((index) => (index + 1) % clients.length);
+    }, 3400);
+
+    return () => window.clearInterval(timer);
+  }, [isPaused]);
+
+  const move = (direction) => {
+    setActiveClient((index) => (index + direction + clients.length) % clients.length);
+  };
+
+  const positionFor = (index) => {
+    const raw = (index - activeClient + clients.length) % clients.length;
+    if (raw === 0) return "center";
+    return raw === 1 ? "right" : "left";
+  };
+
+  const handlePointerDown = (event) => {
+    pointerStart.current = event.clientX;
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+  };
+
+  const handlePointerUp = (event) => {
+    if (pointerStart.current === null) return;
+    const distance = event.clientX - pointerStart.current;
+    pointerStart.current = null;
+    if (Math.abs(distance) < 42) return;
+    move(distance < 0 ? 1 : -1);
+  };
+
   return (
-    <div className="case-peek" aria-hidden="true">
-      <img src={data.image} alt="" width="1536" height="1024" loading="lazy" className={data.cropRight ? "crop-right" : undefined} />
-      <span className="case-peek-label">{data.title}</span>
+    <div
+      className="client-showcase"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={() => setIsPaused(false)}
+    >
+      <div
+        className="client-stage"
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={() => { pointerStart.current = null; }}
+      >
+        {clients.map((client, index) => {
+          const position = positionFor(index);
+          const isActive = position === "center";
+          return (
+            <button
+              type="button"
+              key={client.name}
+              className={`client-card client-${position} client-theme-${client.theme}`}
+              onClick={() => setActiveClient(index)}
+              aria-label={`Show ${client.name} logo`}
+              aria-current={isActive ? "true" : undefined}
+              tabIndex={isActive ? 0 : -1}
+            >
+              <span className="client-logo-shell">
+                <img src={client.image} alt={`${client.name} logo`} width="1200" height="800" loading="lazy" />
+              </span>
+              <span className="client-name">{client.name}</span>
+            </button>
+          );
+        })}
+      </div>
+      <div className="client-controls" aria-label="Client logo carousel controls">
+        <button type="button" onClick={() => move(-1)} aria-label="Previous client">←</button>
+        <div className="client-dots">
+          {clients.map((client, index) => (
+            <button
+              type="button"
+              key={client.name}
+              className={index === activeClient ? "active" : ""}
+              onClick={() => setActiveClient(index)}
+              aria-label={`Show ${client.name}`}
+              aria-current={index === activeClient ? "true" : undefined}
+            />
+          ))}
+        </div>
+        <button type="button" onClick={() => move(1)} aria-label="Next client">→</button>
+      </div>
+    </div>
+  );
+}
+
+function CaseStudyDialog({ caseStudy, onClose }) {
+  const dialogPanel = useRef(null);
+  const closeButton = useRef(null);
+  const previousFocus = useRef(null);
+
+  useEffect(() => {
+    if (!caseStudy) return undefined;
+
+    previousFocus.current = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.setTimeout(() => closeButton.current?.focus(), 30);
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (event.key === "Tab") {
+        const focusable = dialogPanel.current?.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+      previousFocus.current?.focus?.();
+    };
+  }, [caseStudy, onClose]);
+
+  if (!caseStudy) return null;
+
+  return (
+    <div className="case-dialog" role="presentation" onMouseDown={onClose}>
+      <div className="case-dialog-backdrop" />
+      <article
+        ref={dialogPanel}
+        className="case-dialog-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="case-dialog-title"
+        aria-describedby="case-dialog-description"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
+        <button ref={closeButton} className="case-dialog-close" type="button" onClick={onClose} aria-label="Close case study">×</button>
+        <div className={caseStudy.cropRight ? "case-dialog-image crop-right" : "case-dialog-image"}>
+          <img src={caseStudy.image} alt={caseStudy.alt} width="1536" height="1024" />
+        </div>
+        <div className="case-dialog-copy">
+          <p>{caseStudy.eyebrow}</p>
+          <h3 id="case-dialog-title">{caseStudy.title}</h3>
+          <span id="case-dialog-description">{caseStudy.description}</span>
+          <a href="#contact" onClick={onClose}>Discuss a similar platform <b>↗</b></a>
+        </div>
+      </article>
     </div>
   );
 }
@@ -129,12 +293,7 @@ async function sendInquiry(inquiry) {
 export default function App() {
   const [formPhase, setFormPhase] = useState(0);
   const [formError, setFormError] = useState("");
-  const [caseIndex, setCaseIndex] = useState(0);
-  const caseCount = caseStudies.length;
-  const activeCase = caseStudies[caseIndex];
-  const prevCase = caseStudies[(caseIndex - 1 + caseCount) % caseCount];
-  const nextCaseData = caseStudies[(caseIndex + 1) % caseCount];
-  const showNextCase = () => setCaseIndex((index) => (index + 1) % caseCount);
+  const [selectedCase, setSelectedCase] = useState(null);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -142,7 +301,7 @@ export default function App() {
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const revealTargets = document.querySelectorAll(
-      ".section-label, .service-list article, .editorial-image, .extension-statement, .advantage-grid article, .model-grid article, .process-heading h2, .process-grid, .process-grid article, .assurance > .eyebrow, .assurance > h2, .assurance-grid article, .faq > div:first-child, .faq-list details, .contact-intro, .contact form",
+      ".clients-heading, .client-showcase, .section-label, .service-list article, .editorial-image, .extension-statement, .advantage-grid article, .model-grid article, .case-tile, .process-heading h2, .process-grid, .process-grid article, .assurance > .eyebrow, .assurance > h2, .assurance-grid article, .faq > div:first-child, .faq-list details, .contact-intro, .contact form",
     );
 
     revealTargets.forEach((element) => element.classList.add("motion-reveal"));
@@ -270,12 +429,12 @@ export default function App() {
           <span><b>H2S VOLT</b><small>ENGINEERING PARTNER</small></span>
         </a>
         <nav className="desktop-nav" aria-label="Main navigation">
-          <a href="#services">Services</a><a href="#why">Why H2S</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a>
+          <a href="#clients">Clients</a><a href="#services">Services</a><a href="#why">Why H2S</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a>
         </nav>
         <a className="header-cta" href="#contact">Start a project <span>↗</span></a>
         <details className="mobile-menu">
           <summary aria-label="Open navigation"><span></span><span></span></summary>
-          <nav><a href="#services">Services</a><a href="#why">Why H2S</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a></nav>
+          <nav><a href="#clients">Clients</a><a href="#services">Services</a><a href="#why">Why H2S</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a></nav>
         </details>
       </header>
 
@@ -306,6 +465,17 @@ export default function App() {
         <div><span className="proof-mark">NDA</span><p>Available before discovery</p></div>
         <div><span className="proof-mark">Zero</span><p>Black-box delivery</p></div>
         <div><span className="proof-mark">Weekly</span><p>Progress demonstrations</p></div>
+      </section>
+
+      <section className="clients-section" id="clients">
+        <div className="clients-heading">
+          <div>
+            <p className="eyebrow">Selected client partnerships</p>
+            <h2>Brands that trusted H2S VOLT to build.</h2>
+          </div>
+          <p>Drag, swipe or use the controls to explore the businesses and products we have worked with.</p>
+        </div>
+        <ClientShowcase />
       </section>
 
       <section className="section services" id="services">
@@ -340,27 +510,24 @@ export default function App() {
 
       <section className="section work" id="work">
         <div className="work-heading"><div className="section-label"><span>03</span><p>Selected work</p></div><div className="work-title"><h2>Complex products, made clear.</h2><img className="work-logo" src="/h2svolt-logo.png" alt="" width="92" height="92" aria-hidden="true" /></div></div>
-        <div className="case-carousel">
-          <CasePeek data={prevCase} />
-          <div className="case-grid">
-            <article className="case-card" key={activeCase.title}>
-              <div className="case-copy">
-                <p>{activeCase.eyebrow}</p>
-                <h3>{activeCase.title}</h3>
-                <span>{activeCase.description}</span>
-                <a href="#contact">Discuss a similar platform ↗</a>
-              </div>
-              <div className={activeCase.cropRight ? "case-image crop-right" : "case-image"}>
-                <img src={activeCase.image} alt={activeCase.alt} width="1536" height="1024" loading="lazy" />
-              </div>
+        <div className="case-list">
+          {caseStudies.map((caseStudy, index) => (
+            <article className="case-tile" key={caseStudy.title}>
+              <button type="button" className="case-trigger" onClick={() => setSelectedCase(caseStudy)} aria-label={`Open ${caseStudy.title} case study`}>
+                <span className={caseStudy.cropRight ? "case-thumbnail crop-right" : "case-thumbnail"}>
+                  <img src={caseStudy.image} alt={caseStudy.alt} width="1536" height="1024" loading="lazy" />
+                </span>
+                <span className="case-tile-copy">
+                  <small>{caseStudy.eyebrow}</small>
+                  <strong>{caseStudy.title}</strong>
+                  <i aria-hidden="true">+</i>
+                </span>
+                <span className="case-index" aria-hidden="true">0{index + 1}</span>
+              </button>
             </article>
-          </div>
-          <CasePeek data={nextCaseData} />
+          ))}
         </div>
-        <div className="case-nav">
-          <span className="case-counter">{String(caseIndex + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}</span>
-          <button type="button" className="case-next" onClick={showNextCase}>Next case study <span>↗</span></button>
-        </div>
+        <CaseStudyDialog caseStudy={selectedCase} onClose={() => setSelectedCase(null)} />
       </section>
 
       <section className="section process" id="process">
