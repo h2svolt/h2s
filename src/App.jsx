@@ -577,7 +577,7 @@ export default function App() {
   <p>Co-founded by</p>
 
   <a
-    href="https://www.linkedin.com/in/hamza-yousuf-6a8b1334a"
+    href="https://www.linkedin.com/in/hamza-yousuf-h2svolt"
     target="_blank"
     rel="author me noreferrer"
   >
@@ -591,17 +591,9 @@ export default function App() {
   >
     Muhammad Sohaib Jaber ↗
   </a>
-
-  <a
-    href="https://www.linkedin.com/in/abdul-hadi-14a9462a5/"
-    target="_blank"
-    rel="author me noreferrer"
-  >
-    Abdul Hadi Khan ↗
-  </a>
 </div></div>
         <div><b>Explore</b><a href="#services">Services</a><a href="#engagement">Engagements</a><a href="#work">Work</a><a href="#process">Process</a></div>
-        <div><b>Connect</b><a href="mailto:info@h2svolt.com">info@h2svolt.com</a><a href="https://www.linkedin.com/company/h2s-volt" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div>
+        <div><b>Connect</b><a href="mailto:info@h2svolt.com">info@h2svolt.com</a><a href="https://www.linkedin.com/company/h2s-volt" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://www.linkedin.com/in/abdul-hadi-14a9462a5/" target="_blank" rel="noreferrer">Abdul Hadi Khan ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div>
         <p className="copyright">© 2026 H2S VOLT. All rights reserved.</p>
       </footer>
     </main>
