@@ -4,10 +4,11 @@ import "./index.css";
 
 const services = [
   ["01", "Web platforms", "Fast, secure web applications built around real business workflows and measurable outcomes."],
-  ["02", "Mobile applications", "Cross-platform products designed for consistent performance and intuitive use."],
-  ["03", "Custom software", "Purpose-built systems that remove friction, automate work and support growth."],
-  ["04", "Cybersecurity", "Security reviews, penetration testing and safer engineering practices from the start."],
-  ["05", "Dedicated product teams", "A focused remote team that works as a dependable extension of your business."],
+  ["02", "Shopify & ecommerce", "Brand-led storefronts, structured catalogues and considered shopping experiences, from product discovery to checkout."],
+  ["03", "Mobile applications", "Cross-platform products designed for consistent performance and intuitive use."],
+  ["04", "Custom software", "Purpose-built systems that remove friction, automate work and support growth."],
+  ["05", "Cybersecurity", "Security reviews, penetration testing and safer engineering practices from the start."],
+  ["06", "Dedicated product teams", "A focused remote team that works as a dependable extension of your business."],
 ];
 
 const models = [
@@ -27,14 +28,14 @@ const process = [
 const caseStudies = [
   {
     eyebrow: "Compliance technology",
-    title: "Pak Trace",
+    title: "PakTrace",
     description: "A blockchain-based AML and KYC framework with AI-supported detection and structured reporting.",
     image: "/pak-trace.jpeg",
     alt: "Pak Trace platform interface",
   },
   {
     eyebrow: "Gamified learning",
-    title: "Cyber Quest",
+    title: "CyberQuest",
     description: "An interactive cybersecurity awareness platform built around practice, progress and engagement.",
     image: "/cyber-quest.jpeg",
     alt: "Cyber Quest platform interface",
@@ -65,104 +66,102 @@ const caseStudies = [
   },
 ];
 
-const clients = [
-  { name: "Y-SCENTS", image: "/client-yscents.jpeg", theme: "light" },
-  { name: "Excel", image: "/client-excel.jpeg", theme: "light" },
-  { name: "DreamFyre", image: "/client-dreamfyre.jpeg", theme: "dark" },
+const portfolio = [
+  { title: "Y-SCENTS", eyebrow: "Fragrance · Shopify", description: "A considered shopping experience for a fragrance brand, bringing together collection discovery, product storytelling and a clear path to checkout.", image: "/portfolio/yscents.webp", alt: "Y-SCENTS fragrance storefront", url: "https://www.yscents.store/", scope: ["Storefront design", "Shopify development", "Product presentation"] },
+  { title: "Bays Attire", eyebrow: "Fashion · Shopify", description: "An editorial storefront for a womenswear label. Collection browsing, product detail and sizing guidance help customers explore the brand and choose their next piece.", image: "/portfolio/baysattire.webp", alt: "Bays Attire fashion storefront", url: "https://baysattire.com/", scope: ["Shopify storefront", "Collection pages", "Mobile experience"] },
+  { title: "JYCreation", eyebrow: "Handmade goods · Ecommerce", description: "A distinctive online home for handmade creations, with organised collections, product browsing and a dedicated route for custom orders.", image: "/portfolio/jycreation.webp", alt: "JYCreation handmade goods storefront", url: "https://www.jycreations.store/", scope: ["Custom storefront", "Collection discovery", "Custom order enquiries"] },
+  { title: "Vape Planet", eyebrow: "Retail · Custom ecommerce", description: "A custom retail platform built around a structured catalogue, category navigation and product search, with an administration experience for managing the store.", image: "/portfolio/vapeplanet.webp", alt: "Vape Planet retail website interface", scope: ["Catalogue architecture", "Storefront development", "Admin tools"] },
+  { title: "DreamFyre", eyebrow: "Digital platform", description: "A platform project with distinct player, staff and administrator experiences. The work brings account access, dashboards and operational workflows into one interface.", image: "/client-dreamfyre.jpeg", alt: "DreamFyre brand identity", brandOnly: true, scope: ["Interface design", "Account experiences", "Administration workflows"] },
+  { title: "Excel", eyebrow: "Brand partnership", description: "Part of the H2S VOLT client portfolio.", image: "/client-excel.jpeg", alt: "Excel client brand identity", brandOnly: true },
+  ...caseStudies.slice(0, 3).map(project => ({ ...project, personal: true, eyebrow: `Personal project · ${project.eyebrow}` })),
 ];
 
-function ClientShowcase() {
-  const [activeClient, setActiveClient] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const pointerStart = useRef(null);
-
+function MotionEnhancements() {
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion || isPaused) return undefined;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    let dispose = () => {};
+    const configure = () => {
+      dispose();
+      if (preference.matches) return;
+      const targets = [...document.querySelectorAll(".portfolio-heading, .portfolio-card, .service-list article, .extension-statement, .advantage-grid article, .model-grid article, .case-tile, .process-grid article, .faq-list details, .contact-intro")];
+      let observer;
+      if ("IntersectionObserver" in window) {
+        observer = new IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }), { threshold: 0.08 });
+        targets.forEach((target, index) => {
+          // Never hide content already in view or currently focused.
+          if (target.getBoundingClientRect().top < window.innerHeight || target.contains(document.activeElement)) return;
+          target.style.setProperty("--reveal-delay", `${index % 2 * 70}ms`);
+          target.classList.add("scroll-reveal");
+          observer.observe(target);
+        });
+      }
+      const cards = [...document.querySelectorAll(".hero-project, .portfolio-visual")];
+      const cleanups = [];
+      if (finePointer.matches) cards.forEach(card => {
+        let frame = 0;
+        const move = event => {
+          if (event.pointerType !== "mouse") return;
+          const {clientX, clientY} = event;
+          cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            const box = card.getBoundingClientRect();
+            const x = Math.max(0, Math.min(1, (clientX - box.left) / box.width));
+            const y = Math.max(0, Math.min(1, (clientY - box.top) / box.height));
+            card.style.setProperty("--tilt-x", `${(0.5 - y) * 10}deg`);
+            card.style.setProperty("--tilt-y", `${(x - 0.5) * 12}deg`);
+            card.style.setProperty("--shift-x", `${(x - 0.5) * 8}px`);
+            card.style.setProperty("--shift-y", `${(y - 0.5) * 8}px`);
+            card.style.setProperty("--light-x", `${x * 100}%`);
+            card.style.setProperty("--light-y", `${y * 100}%`);
+            card.classList.add("tilting");
+          });
+        };
+        const reset = () => {
+          cancelAnimationFrame(frame);
+          card.classList.remove("tilting");
+          ["--tilt-x", "--tilt-y", "--light-x", "--light-y", "--shift-x", "--shift-y"].forEach(key => card.style.removeProperty(key));
+        };
+        card.addEventListener("pointermove", move);
+        card.addEventListener("pointerleave", reset);
+        card.addEventListener("pointercancel", reset);
+        card.addEventListener("blur", reset);
+        cleanups.push(() => {
+          reset();
+          card.removeEventListener("pointermove", move);
+          card.removeEventListener("pointerleave", reset);
+          card.removeEventListener("pointercancel", reset);
+          card.removeEventListener("blur", reset);
+        });
+      });
+      dispose = () => {
+        observer?.disconnect();
+        targets.forEach(target => {
+          target.classList.remove("scroll-reveal", "is-visible");
+          target.style.removeProperty("--reveal-delay");
+        });
+        cleanups.forEach(cleanup => cleanup());
+      };
+    };
+    configure();
+    preference.addEventListener("change", configure);
+    finePointer.addEventListener("change", configure);
+    return () => {
+      dispose();
+      preference.removeEventListener("change", configure);
+      finePointer.removeEventListener("change", configure);
+    };
+  }, []);
+  return null;
+}
 
-    const timer = window.setInterval(() => {
-      setActiveClient((index) => (index + 1) % clients.length);
-    }, 3400);
-
-    return () => window.clearInterval(timer);
-  }, [isPaused]);
-
-  const move = (direction) => {
-    setActiveClient((index) => (index + direction + clients.length) % clients.length);
-  };
-
-  const positionFor = (index) => {
-    const raw = (index - activeClient + clients.length) % clients.length;
-    if (raw === 0) return "center";
-    return raw === 1 ? "right" : "left";
-  };
-
-  const handlePointerDown = (event) => {
-    pointerStart.current = event.clientX;
-    event.currentTarget.setPointerCapture?.(event.pointerId);
-  };
-
-  const handlePointerUp = (event) => {
-    if (pointerStart.current === null) return;
-    const distance = event.clientX - pointerStart.current;
-    pointerStart.current = null;
-    if (Math.abs(distance) < 42) return;
-    move(distance < 0 ? 1 : -1);
-  };
-
-  return (
-    <div
-      className="client-showcase"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocusCapture={() => setIsPaused(true)}
-      onBlurCapture={() => setIsPaused(false)}
-    >
-      <div
-        className="client-stage"
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={() => { pointerStart.current = null; }}
-      >
-        {clients.map((client, index) => {
-          const position = positionFor(index);
-          const isActive = position === "center";
-          return (
-            <button
-              type="button"
-              key={client.name}
-              className={`client-card client-${position} client-theme-${client.theme}`}
-              onClick={() => setActiveClient(index)}
-              aria-label={`Show ${client.name} logo`}
-              aria-current={isActive ? "true" : undefined}
-              tabIndex={isActive ? 0 : -1}
-            >
-              <span className="client-logo-shell">
-                <img src={client.image} alt={`${client.name} logo`} width="1200" height="800" loading="lazy" />
-              </span>
-              <span className="client-name">{client.name}</span>
-            </button>
-          );
-        })}
-      </div>
-      <div className="client-controls" aria-label="Client logo carousel controls">
-        <button type="button" onClick={() => move(-1)} aria-label="Previous client">←</button>
-        <div className="client-dots">
-          {clients.map((client, index) => (
-            <button
-              type="button"
-              key={client.name}
-              className={index === activeClient ? "active" : ""}
-              onClick={() => setActiveClient(index)}
-              aria-label={`Show ${client.name}`}
-              aria-current={index === activeClient ? "true" : undefined}
-            />
-          ))}
-        </div>
-        <button type="button" onClick={() => move(1)} aria-label="Next client">→</button>
-      </div>
-    </div>
-  );
+function ClientShowcase() {
+  return <div className="brand-strip">{portfolio.filter(project => !project.personal).map(project => <a key={project.title} href="#work">{project.title}</a>)}</div>;
 }
 
 function CaseStudyDialog({ caseStudy, onClose }) {
@@ -224,14 +223,16 @@ function CaseStudyDialog({ caseStudy, onClose }) {
         onMouseDown={(event) => event.stopPropagation()}
       >
         <button ref={closeButton} className="case-dialog-close" type="button" onClick={onClose} aria-label="Close case study">×</button>
-        <div className={caseStudy.cropRight ? "case-dialog-image crop-right" : "case-dialog-image"}>
+        <div className={`case-dialog-image ${caseStudy.brandOnly ? "brand-image" : ""}`}>
           <img src={caseStudy.image} alt={caseStudy.alt} width="1536" height="1024" />
         </div>
         <div className="case-dialog-copy">
           <p>{caseStudy.eyebrow}</p>
           <h3 id="case-dialog-title">{caseStudy.title}</h3>
           <span id="case-dialog-description">{caseStudy.description}</span>
-          <a href="#contact" onClick={onClose}>Discuss a similar platform <b>↗</b></a>
+          {caseStudy.scope && <ul className="scope-list">{caseStudy.scope.map(item => <li key={item}>{item}</li>)}</ul>}
+          {caseStudy.url && <a href={caseStudy.url} target="_blank" rel="noreferrer">Visit website <b>↗</b></a>}
+          <a href="#contact" onClick={onClose}>Discuss your project <b>↗</b></a>
         </div>
       </article>
     </div>
@@ -296,89 +297,11 @@ export default function App() {
   const [selectedCase, setSelectedCase] = useState(null);
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.add("motion-ready");
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const revealTargets = document.querySelectorAll(
-      ".clients-heading, .client-showcase, .section-label, .service-list article, .editorial-image, .extension-statement, .advantage-grid article, .model-grid article, .case-tile, .process-heading h2, .process-grid, .process-grid article, .assurance > .eyebrow, .assurance > h2, .assurance-grid article, .faq > div:first-child, .faq-list details, .contact-intro, .contact form",
-    );
-
-    revealTargets.forEach((element) => element.classList.add("motion-reveal"));
-
-    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-      revealTargets.forEach((element) => element.classList.add("in-view"));
-      return () => root.classList.remove("motion-ready");
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("in-view");
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -7% 0px" },
-    );
-
-    revealTargets.forEach((element) => observer.observe(element));
-
     const header = document.querySelector(".site-header");
     const onScroll = () => header?.classList.toggle("scrolled", window.scrollY > 36);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    const heroArt = document.querySelector(".hero-art");
-    const onPointerMove = (event) => {
-      if (!heroArt) return;
-      const bounds = heroArt.getBoundingClientRect();
-      const x = ((event.clientX - bounds.left) / bounds.width) * 100;
-      const y = ((event.clientY - bounds.top) / bounds.height) * 100;
-      heroArt.style.setProperty("--spot-x", `${x}%`);
-      heroArt.style.setProperty("--spot-y", `${y}%`);
-      heroArt.style.setProperty("--move-x", `${(x - 50) * -0.045}px`);
-      heroArt.style.setProperty("--move-y", `${(y - 50) * -0.035}px`);
-    };
-    const resetPointer = () => {
-      heroArt?.style.setProperty("--spot-x", "68%");
-      heroArt?.style.setProperty("--spot-y", "44%");
-      heroArt?.style.setProperty("--move-x", "0px");
-      heroArt?.style.setProperty("--move-y", "0px");
-    };
-    heroArt?.addEventListener("pointermove", onPointerMove);
-    heroArt?.addEventListener("pointerleave", resetPointer);
-
-    const proof = document.querySelector(".proof");
-    const counter = document.querySelector("[data-counter]");
-    let counterFrame = 0;
-    const counterObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || !counter) return;
-        const start = performance.now();
-        const duration = 900;
-        const tick = (time) => {
-          const progress = Math.min((time - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          counter.textContent = `${Math.round(eased * 10)}+`;
-          if (progress < 1) counterFrame = requestAnimationFrame(tick);
-        };
-        counterFrame = requestAnimationFrame(tick);
-        counterObserver.disconnect();
-      },
-      { threshold: 0.55 },
-    );
-    if (proof) counterObserver.observe(proof);
-
-    return () => {
-      observer.disconnect();
-      counterObserver.disconnect();
-      cancelAnimationFrame(counterFrame);
-      window.removeEventListener("scroll", onScroll);
-      heroArt?.removeEventListener("pointermove", onPointerMove);
-      heroArt?.removeEventListener("pointerleave", resetPointer);
-      root.classList.remove("motion-ready");
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const handleProjectSubmit = async (event) => {
@@ -423,59 +346,54 @@ export default function App() {
 
   return (
     <main>
+      <MotionEnhancements />
       <header className="site-header">
         <a href="#top" className="brand" aria-label="H2S VOLT home">
           <img src="/h2svolt-logo.png" alt="H2S VOLT" width="58" height="58" />
-          <span><b>H2S VOLT</b><small>ENGINEERING PARTNER</small></span>
+          <span><b>H2S VOLT</b><small>BUILD · INNOVATE · ELEVATE</small></span>
         </a>
         <nav className="desktop-nav" aria-label="Main navigation">
-          <a href="#clients">Clients</a><a href="#services">Services</a><a href="#why">Why H2S</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a>
+          <a href="#work">Our work</a><a href="#services">Services</a><a href="#why">The studio</a><a href="#process">Process</a><a href="#contact">Contact</a>
         </nav>
         <a className="header-cta" href="#contact">Start a project <span>↗</span></a>
         <details className="mobile-menu">
           <summary aria-label="Open navigation"><span></span><span></span></summary>
-          <nav><a href="#clients">Clients</a><a href="#services">Services</a><a href="#why">Why H2S</a><a href="#work">Work</a><a href="#process">Process</a><a href="#contact">Contact</a></nav>
+          <nav><a href="#work">Our work</a><a href="#services">Services</a><a href="#why">The studio</a><a href="#process">Process</a><a href="#contact">Contact</a></nav>
         </details>
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-copy reveal">
-          <p className="eyebrow">Remote product engineering · Global delivery</p>
-          <h1 aria-label="Engineering partnerships built for global ambition.">
-            <span className="headline-line"><span>Engineering partnerships</span></span>
-            <span className="headline-line"><span>built for <em>global ambition.</em></span></span>
-          </h1>
-          <p className="hero-lead hero-sequence">A senior remote product team for international businesses that need thoughtful strategy, secure engineering and dependable delivery.</p>
-          <div className="hero-actions hero-sequence">
-            <a className="button button-primary" href="#contact">Start a conversation <span>↗</span></a>
-            <a className="button button-secondary" href="#work">Explore our work</a>
+        <div className="hero-copy">
+          <p className="eyebrow">Independent digital studio · Pakistan / Worldwide</p>
+          <h1>Your next chapter.<br /><em>Built with Volt.</em></h1>
+          <p className="hero-lead">Distinctive websites. Thoughtful software. We turn ambitious ideas into digital experiences your customers remember.</p>
+          <div className="hero-actions">
+            <a className="button button-primary" href="#work">Explore our work <span>↗</span></a>
+            <a className="button button-secondary" href="#contact">Tell us your idea</a>
           </div>
-          <div className="hero-notes hero-sequence"><span>NDA available</span><span>Flexible engagement</span><span>Open, documented handover</span></div>
+          <div className="hero-notes"><span>Design</span><span>Development</span><span>Ongoing support</span></div>
         </div>
-        <div className="hero-art" aria-label="Abstract architectural engineering visual">
-          <img src="/midnight-hero-architecture.png" alt="Abstract midnight architectural structure" width="1536" height="960" />
-          <div className="hero-spotlight" aria-hidden="true" />
-          <div className="hero-lines" aria-hidden="true"><i/><i/><i/><i/><i/><i/></div>
-          <span className="art-caption">Strategy / Engineering / Security</span>
-        </div>
+        <button className="hero-project" onClick={() => setSelectedCase(portfolio[0])} aria-label="View Y-SCENTS project">
+          <span className="project-window"><span>Selected project / 01</span><span>yscents.store ↗</span></span>
+          <img src="/portfolio/yscents.webp" alt="The Y-SCENTS website designed by H2S VOLT" width="1348" height="926" fetchPriority="high" />
+          <span className="hero-project-caption"><strong>Y-SCENTS</strong><span>Fragrance, expressed digitally.</span></span>
+        </button>
       </section>
-
-      <section className="proof" aria-label="Delivery assurances">
-        <div><span className="proof-mark" data-counter="10">10+</span><p>Projects delivered</p></div>
-        <div><span className="proof-mark">NDA</span><p>Available before discovery</p></div>
-        <div><span className="proof-mark">Zero</span><p>Black-box delivery</p></div>
-        <div><span className="proof-mark">Weekly</span><p>Progress demonstrations</p></div>
-      </section>
-
-      <section className="clients-section" id="clients">
-        <div className="clients-heading">
-          <div>
-            <p className="eyebrow">Selected client partnerships</p>
-            <h2>Brands that trusted H2S VOLT to build.</h2>
-          </div>
-          <p>Drag, swipe or use the controls to explore the businesses and products we have worked with.</p>
-        </div>
+      <section className="clients-section" id="clients" aria-label="Selected client brands">
+        <p className="eyebrow">Different brands. Shared ambition.</p>
         <ClientShowcase />
+      </section>
+      <section className="section portfolio" id="work">
+        <div className="portfolio-heading"><div><p className="eyebrow">01 / Selected portfolio</p><h2>Good work.<br /><em>Built with purpose.</em></h2></div><p>Client partnerships and personal projects. Explore our storefronts, custom platforms and work in cybersecurity.</p></div>
+        <div className="portfolio-grid">{portfolio.map((project,index) => <article className={`portfolio-card ${project.brandOnly ? "brand-project" : ""}`} key={project.title}>
+          <button className="portfolio-visual" onClick={() => setSelectedCase(project)} aria-label={`View ${project.title} project`}>
+            <img src={project.image} alt={project.alt} width="1348" height="926" loading="lazy" />
+            <span className="view-project">View project ↗</span>
+          </button>
+          <div className="portfolio-meta"><div><p>{project.eyebrow}</p><h3><button onClick={() => setSelectedCase(project)}>{project.title}</button></h3></div><span className="project-number">{String(index+1).padStart(2,"0")}</span></div>
+          <p className="portfolio-description">{project.description}</p>
+          {project.scope && <div className="project-tags">{project.scope.map(item => <span key={item}>{item}</span>)}</div>}
+        </article>)}</div>
       </section>
 
       <section className="section services" id="services">
@@ -494,7 +412,7 @@ export default function App() {
       </section>
 
       <section className="section extension" id="why">
-        <div className="extension-statement"><p className="eyebrow">Built for international outsourcing</p><h2>We operate as an extension of your team, with your goals at the centre.</h2><p>Distance should never create uncertainty. Our delivery model is designed around direct communication, visible progress and shared accountability.</p></div>
+        <div className="extension-statement"><p className="eyebrow">The people behind the pixels</p><h2>A small team. Invested in your big picture.</h2><p>Work directly with the people designing and building your product. We connect the visual details with the practical needs of your business, from the first conversation through launch and support.</p><div className="founder-intro" id="hamza-yousuf"><p className="eyebrow">Co-founder</p><h3>Hamza Yousuf</h3><p>Hamza Yousuf is a co-founder of H2S VOLT, our software development and cybersecurity company based in Pakistan.</p><a href="/hamza-yousuf/">Meet Hamza Yousuf ↗</a><a href="https://www.linkedin.com/in/hamza-yousuf-h2svolt" target="_blank" rel="me noreferrer">Hamza on LinkedIn ↗</a></div></div>
         <div className="advantage-grid">
           <article><span>01</span><h3>Direct engineer access</h3><p>Work with the people building your product—not layers of account management.</p></article>
           <article><span>02</span><h3>Timezone alignment</h3><p>We agree productive overlap for decisions, demonstrations and collaboration.</p></article>
@@ -508,10 +426,10 @@ export default function App() {
         <div className="model-grid">{models.map(([title, copy], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p><a href="#contact">Discuss this model ↗</a></article>)}</div>
       </section>
 
-      <section className="section work" id="work">
-        <div className="work-heading"><div className="section-label"><span>03</span><p>Selected work</p></div><div className="work-title"><h2>Complex products, made clear.</h2><img className="work-logo" src="/h2svolt-logo.png" alt="" width="92" height="92" aria-hidden="true" /></div></div>
+      <section className="section work" id="technical-work">
+        <div className="work-heading"><div className="section-label"><span>03</span><p>Technical projects</p></div><div className="work-title"><h2>Beyond the storefront.</h2><img className="work-logo" src="/h2svolt-logo.png" alt="" width="92" height="92" aria-hidden="true" /></div></div>
         <div className="case-list">
-          {caseStudies.map((caseStudy, index) => (
+          {caseStudies.slice(3).map((caseStudy, index) => (
             <article className="case-tile" key={caseStudy.title}>
               <button type="button" className="case-trigger" onClick={() => setSelectedCase(caseStudy)} aria-label={`Open ${caseStudy.title} case study`}>
                 <span className={caseStudy.cropRight ? "case-thumbnail crop-right" : "case-thumbnail"}>
@@ -531,7 +449,7 @@ export default function App() {
       </section>
 
       <section className="section process" id="process">
-        <div className="process-heading"><div className="section-label"><span>04</span><p>Delivery process</p></div><h2>A clear path from brief to launch.</h2></div>
+        <div className="process-heading"><div className="section-label"><span>04</span><p>Delivery process</p></div><h2>A clear process. A better launch.</h2></div>
         <div className="process-grid">{process.map(([number, title, copy]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
       </section>
 
@@ -556,7 +474,7 @@ export default function App() {
       </section>
 
       <section className="contact" id="contact">
-        <div className="contact-intro"><p className="eyebrow">Start with a conversation</p><h2>Build with a team that treats your ambition like its own.</h2><p>Tell us what you need to achieve. We’ll send an immediate confirmation and reply within one business day with the right questions and a practical next step.</p><div className="contact-links"><a href="mailto:info@h2svolt.com">info@h2svolt.com ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div></div>
+        <div className="contact-intro"><p className="eyebrow">Start with a conversation</p><h2>Have something in mind? Let’s build it.</h2><p>Tell us what you need to achieve. We’ll send an immediate confirmation and reply within one business day with the right questions and a practical next step.</p><div className="contact-links"><a href="mailto:info@h2svolt.com">info@h2svolt.com ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div></div>
         <form onSubmit={handleProjectSubmit}>
           <label className="honeypot" aria-hidden="true">Company website<input name="company" tabIndex="-1" autoComplete="off" /></label>
           <label>Name<input name="name" required placeholder="Your name" /></label>
@@ -581,8 +499,9 @@ export default function App() {
     target="_blank"
     rel="author me noreferrer"
   >
-    Hamza Yousuf ↗
+    Hamza Yousuf · Co-Founder ↗
   </a>
+  <a href="/hamza-yousuf/">About Hamza Yousuf</a>
 
   <a
     href="https://www.linkedin.com/in/muhammad-sohaib-jaber-306b29218/"
