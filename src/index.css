@@ -63,3 +63,5 @@
 @media(prefers-reduced-motion:no-preference) {
   @keyframes project-arrive { from { opacity:0; translate:0 32px; scale:.97; } to { opacity:1; translate:0 0; scale:1; } }
 }
+
+.founder-intro{margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}.founder-intro .eyebrow{margin-bottom:10px}.founder-intro h3{font-size:26px;margin:0 0 12px;font-weight:500}.founder-intro>p:not(.eyebrow){font-size:16px;line-height:1.7;color:var(--muted)}.founder-intro>a{display:inline-block;margin:8px 22px 0 0;font-size:14px;color:var(--accent)}
