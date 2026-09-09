@@ -5,10 +5,10 @@ import "./index.css";
 const services = [
   ["01", "Web platforms", "Fast, secure web applications built around real business workflows and measurable outcomes."],
   ["02", "Shopify & ecommerce", "Brand-led storefronts, structured catalogues and considered shopping experiences, from product discovery to checkout."],
-  ["06", "Mobile applications", "Cross-platform products designed for consistent performance and intuitive use."],
-  ["03", "Custom software", "Purpose-built systems that remove friction, automate work and support growth."],
-  ["04", "Cybersecurity", "Security reviews, penetration testing and safer engineering practices from the start."],
-  ["05", "Dedicated product teams", "A focused remote team that works as a dependable extension of your business."],
+  ["03", "Mobile applications", "Cross-platform products designed for consistent performance and intuitive use."],
+  ["04", "Custom software", "Purpose-built systems that remove friction, automate work and support growth."],
+  ["05", "Cybersecurity", "Security reviews, penetration testing and safer engineering practices from the start."],
+  ["06", "Dedicated product teams", "A focused remote team that works as a dependable extension of your business."],
 ];
 
 const models = [
@@ -28,14 +28,14 @@ const process = [
 const caseStudies = [
   {
     eyebrow: "Compliance technology",
-    title: "Pak Trace",
+    title: "PakTrace",
     description: "A blockchain-based AML and KYC framework with AI-supported detection and structured reporting.",
     image: "/pak-trace.jpeg",
     alt: "Pak Trace platform interface",
   },
   {
     eyebrow: "Gamified learning",
-    title: "Cyber Quest",
+    title: "CyberQuest",
     description: "An interactive cybersecurity awareness platform built around practice, progress and engagement.",
     image: "/cyber-quest.jpeg",
     alt: "Cyber Quest platform interface",
@@ -73,10 +73,93 @@ const portfolio = [
   { title: "Vape Planet", eyebrow: "Retail · Custom ecommerce", description: "A custom retail platform built around a structured catalogue, category navigation and product search, with an administration experience for managing the store.", image: "/portfolio/vapeplanet.webp", alt: "Vape Planet retail website interface", scope: ["Catalogue architecture", "Storefront development", "Admin tools"] },
   { title: "DreamFyre", eyebrow: "Digital platform", description: "A platform project with distinct player, staff and administrator experiences. The work brings account access, dashboards and operational workflows into one interface.", image: "/client-dreamfyre.jpeg", alt: "DreamFyre brand identity", brandOnly: true, scope: ["Interface design", "Account experiences", "Administration workflows"] },
   { title: "Excel", eyebrow: "Brand partnership", description: "Part of the H2S VOLT client portfolio.", image: "/client-excel.jpeg", alt: "Excel client brand identity", brandOnly: true },
+  ...caseStudies.slice(0, 3).map(project => ({ ...project, personal: true, eyebrow: `Personal project · ${project.eyebrow}` })),
 ];
 
+function MotionEnhancements() {
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    let dispose = () => {};
+    const configure = () => {
+      dispose();
+      if (preference.matches) return;
+      const targets = [...document.querySelectorAll(".portfolio-heading, .portfolio-card, .service-list article, .extension-statement, .advantage-grid article, .model-grid article, .case-tile, .process-grid article, .faq-list details, .contact-intro")];
+      let observer;
+      if ("IntersectionObserver" in window) {
+        observer = new IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }), { threshold: 0.08 });
+        targets.forEach((target, index) => {
+          // Never hide content already in view or currently focused.
+          if (target.getBoundingClientRect().top < window.innerHeight || target.contains(document.activeElement)) return;
+          target.style.setProperty("--reveal-delay", `${index % 2 * 70}ms`);
+          target.classList.add("scroll-reveal");
+          observer.observe(target);
+        });
+      }
+      const cards = [...document.querySelectorAll(".hero-project, .portfolio-visual")];
+      const cleanups = [];
+      if (finePointer.matches) cards.forEach(card => {
+        let frame = 0;
+        const move = event => {
+          if (event.pointerType !== "mouse") return;
+          const {clientX, clientY} = event;
+          cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            const box = card.getBoundingClientRect();
+            const x = Math.max(0, Math.min(1, (clientX - box.left) / box.width));
+            const y = Math.max(0, Math.min(1, (clientY - box.top) / box.height));
+            card.style.setProperty("--tilt-x", `${(0.5 - y) * 7}deg`);
+            card.style.setProperty("--tilt-y", `${(x - 0.5) * 7}deg`);
+            card.style.setProperty("--light-x", `${x * 100}%`);
+            card.style.setProperty("--light-y", `${y * 100}%`);
+            card.classList.add("tilting");
+          });
+        };
+        const reset = () => {
+          cancelAnimationFrame(frame);
+          card.classList.remove("tilting");
+          ["--tilt-x", "--tilt-y", "--light-x", "--light-y"].forEach(key => card.style.removeProperty(key));
+        };
+        card.addEventListener("pointermove", move);
+        card.addEventListener("pointerleave", reset);
+        card.addEventListener("pointercancel", reset);
+        card.addEventListener("blur", reset);
+        cleanups.push(() => {
+          reset();
+          card.removeEventListener("pointermove", move);
+          card.removeEventListener("pointerleave", reset);
+          card.removeEventListener("pointercancel", reset);
+          card.removeEventListener("blur", reset);
+        });
+      });
+      dispose = () => {
+        observer?.disconnect();
+        targets.forEach(target => {
+          target.classList.remove("scroll-reveal", "is-visible");
+          target.style.removeProperty("--reveal-delay");
+        });
+        cleanups.forEach(cleanup => cleanup());
+      };
+    };
+    configure();
+    preference.addEventListener("change", configure);
+    finePointer.addEventListener("change", configure);
+    return () => {
+      dispose();
+      preference.removeEventListener("change", configure);
+      finePointer.removeEventListener("change", configure);
+    };
+  }, []);
+  return null;
+}
+
 function ClientShowcase() {
-  return <div className="brand-strip">{portfolio.map(project => <a key={project.title} href="#work">{project.title}</a>)}</div>;
+  return <div className="brand-strip">{portfolio.filter(project => !project.personal).map(project => <a key={project.title} href="#work">{project.title}</a>)}</div>;
 }
 
 function CaseStudyDialog({ caseStudy, onClose }) {
@@ -261,6 +344,7 @@ export default function App() {
 
   return (
     <main>
+      <MotionEnhancements />
       <header className="site-header">
         <a href="#top" className="brand" aria-label="H2S VOLT home">
           <img src="/h2svolt-logo.png" alt="H2S VOLT" width="58" height="58" />
@@ -298,7 +382,7 @@ export default function App() {
         <ClientShowcase />
       </section>
       <section className="section portfolio" id="work">
-        <div className="portfolio-heading"><div><p className="eyebrow">01 / Selected partnerships</p><h2>Good work.<br /><em>Real businesses.</em></h2></div><p>From independent brands to custom platforms. Explore the businesses we have helped bring to life online.</p></div>
+        <div className="portfolio-heading"><div><p className="eyebrow">01 / Selected portfolio</p><h2>Good work.<br /><em>Built with purpose.</em></h2></div><p>Client partnerships and personal projects. Explore our storefronts, custom platforms and work in cybersecurity.</p></div>
         <div className="portfolio-grid">{portfolio.map((project,index) => <article className={`portfolio-card ${project.brandOnly ? "brand-project" : ""}`} key={project.title}>
           <button className="portfolio-visual" onClick={() => setSelectedCase(project)} aria-label={`View ${project.title} project`}>
             <img src={project.image} alt={project.alt} width="1348" height="926" loading="lazy" />
@@ -343,7 +427,7 @@ export default function App() {
       <section className="section work" id="technical-work">
         <div className="work-heading"><div className="section-label"><span>03</span><p>Technical projects</p></div><div className="work-title"><h2>Beyond the storefront.</h2><img className="work-logo" src="/h2svolt-logo.png" alt="" width="92" height="92" aria-hidden="true" /></div></div>
         <div className="case-list">
-          {caseStudies.map((caseStudy, index) => (
+          {caseStudies.slice(3).map((caseStudy, index) => (
             <article className="case-tile" key={caseStudy.title}>
               <button type="button" className="case-trigger" onClick={() => setSelectedCase(caseStudy)} aria-label={`Open ${caseStudy.title} case study`}>
                 <span className={caseStudy.cropRight ? "case-thumbnail crop-right" : "case-thumbnail"}>
