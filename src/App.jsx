@@ -113,8 +113,10 @@ function MotionEnhancements() {
             const box = card.getBoundingClientRect();
             const x = Math.max(0, Math.min(1, (clientX - box.left) / box.width));
             const y = Math.max(0, Math.min(1, (clientY - box.top) / box.height));
-            card.style.setProperty("--tilt-x", `${(0.5 - y) * 7}deg`);
-            card.style.setProperty("--tilt-y", `${(x - 0.5) * 7}deg`);
+            card.style.setProperty("--tilt-x", `${(0.5 - y) * 10}deg`);
+            card.style.setProperty("--tilt-y", `${(x - 0.5) * 12}deg`);
+            card.style.setProperty("--shift-x", `${(x - 0.5) * 8}px`);
+            card.style.setProperty("--shift-y", `${(y - 0.5) * 8}px`);
             card.style.setProperty("--light-x", `${x * 100}%`);
             card.style.setProperty("--light-y", `${y * 100}%`);
             card.classList.add("tilting");
@@ -123,7 +125,7 @@ function MotionEnhancements() {
         const reset = () => {
           cancelAnimationFrame(frame);
           card.classList.remove("tilting");
-          ["--tilt-x", "--tilt-y", "--light-x", "--light-y"].forEach(key => card.style.removeProperty(key));
+          ["--tilt-x", "--tilt-y", "--light-x", "--light-y", "--shift-x", "--shift-y"].forEach(key => card.style.removeProperty(key));
         };
         card.addEventListener("pointermove", move);
         card.addEventListener("pointerleave", reset);
