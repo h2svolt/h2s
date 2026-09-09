@@ -412,7 +412,7 @@ export default function App() {
       </section>
 
       <section className="section extension" id="why">
-        <div className="extension-statement"><p className="eyebrow">The people behind the pixels</p><h2>A small team. Invested in your big picture.</h2><p>Work directly with the people designing and building your product. We connect the visual details with the practical needs of your business, from the first conversation through launch and support.</p><div className="founder-intro" id="hamza-yousuf"><p className="eyebrow">Co-founder</p><h3>Hamza Yousuf</h3><p>Hamza Yousuf is a co-founder of H2S VOLT, our software development and cybersecurity company based in Pakistan.</p><a href="/hamza-yousuf/">Meet Hamza Yousuf ↗</a><a href="https://www.linkedin.com/in/hamza-yousuf-h2svolt" target="_blank" rel="me noreferrer">Hamza on LinkedIn ↗</a></div></div>
+        <div className="extension-statement"><p className="eyebrow">The people behind the pixels</p><h2>A small team. Invested in your big picture.</h2><p>Work directly with the people designing and building your product. We connect the visual details with the practical needs of your business, from the first conversation through launch and support.</p><div className="founder-intro" id="hamza-yousuf"><p className="eyebrow">Co-founder</p><h3>Hamza Yousuf</h3><p>Hamza Yousuf is a co-founder of H2S VOLT, our software development and cybersecurity company based in Pakistan.</p><a href="/hamza-yousuf/">Meet Hamza Yousuf ↗</a><a href="https://www.linkedin.com/in/hamza-yousuf-h2svolt" target="_blank" rel="me noreferrer">Hamza on LinkedIn ↗</a></div><div className="founder-intro" id="muhammad-sohaib-jaber"><p className="eyebrow">Co-founder</p><h3>Muhammad Sohaib Jaber</h3><p>Muhammad Sohaib Jaber is a co-founder of H2S VOLT, our software development and cybersecurity company based in Pakistan.</p><a href="/muhammad-sohaib-jaber/">Meet Muhammad Sohaib Jaber ↗</a><a href="https://www.linkedin.com/in/muhammad-sohaib-jaber-306b29218/" target="_blank" rel="me noreferrer">Sohaib on LinkedIn ↗</a></div></div>
         <div className="advantage-grid">
           <article><span>01</span><h3>Direct engineer access</h3><p>Work with the people building your product—not layers of account management.</p></article>
           <article><span>02</span><h3>Timezone alignment</h3><p>We agree productive overlap for decisions, demonstrations and collaboration.</p></article>
@@ -508,8 +508,9 @@ export default function App() {
     target="_blank"
     rel="author me noreferrer"
   >
-    Muhammad Sohaib Jaber ↗
+    Muhammad Sohaib Jaber · Co-Founder ↗
   </a>
+  <a href="/muhammad-sohaib-jaber/">About Muhammad Sohaib Jaber</a>
 </div></div>
         <div><b>Explore</b><a href="#services">Services</a><a href="#engagement">Engagements</a><a href="#work">Work</a><a href="#process">Process</a></div>
         <div><b>Connect</b><a href="mailto:info@h2svolt.com">info@h2svolt.com</a><a href="https://www.linkedin.com/company/h2s-volt" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://www.linkedin.com/in/abdul-hadi-14a9462a5/" target="_blank" rel="noreferrer">Abdul Hadi Khan ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div>
