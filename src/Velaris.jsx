@@ -59,7 +59,7 @@ void main() {
   col = mix(col, u_colors[1], smoothstep(-0.1, 0.6, n2) * 0.7);
   col = mix(col, u_colors[2], smoothstep(-0.3, 0.4, n3) * 0.6);
   col = mix(col, u_colors[3], smoothstep(0.0, 0.7, n1 * n2) * 0.5);
-  float glow = smoothstep(0.8, 0.0, dist) * 0.3;
+  float glow = (1.0 - smoothstep(0.0, 0.8, dist)) * 0.3;
   col += u_colors[1] * glow;
   col = mix(col * 0.2, col, vignette);
   float grain = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453 + u_time);
