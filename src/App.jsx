@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import Velaris from "./Velaris";
 import "./index.css";
 
 const services = [
@@ -73,7 +74,6 @@ const portfolio = [
   { title: "Vape Planet", eyebrow: "Retail · Custom ecommerce", description: "A custom retail platform built around a structured catalogue, category navigation and product search, with an administration experience for managing the store.", image: "/portfolio/vapeplanet.webp", alt: "Vape Planet retail website interface", scope: ["Catalogue architecture", "Storefront development", "Admin tools"] },
   { title: "DreamFyre", eyebrow: "Digital platform", description: "A platform project with distinct player, staff and administrator experiences. The work brings account access, dashboards and operational workflows into one interface.", image: "/client-dreamfyre.jpeg", alt: "DreamFyre brand identity", brandOnly: true, scope: ["Interface design", "Account experiences", "Administration workflows"] },
   { title: "Excel", eyebrow: "Brand partnership", description: "Part of the H2S VOLT client portfolio.", image: "/client-excel.jpeg", alt: "Excel client brand identity", brandOnly: true },
-  ...caseStudies.slice(0, 3).map(project => ({ ...project, personal: true, eyebrow: `Personal project · ${project.eyebrow}` })),
 ];
 
 function MotionEnhancements() {
@@ -161,7 +161,7 @@ function MotionEnhancements() {
 }
 
 function ClientShowcase() {
-  return <div className="brand-strip">{portfolio.filter(project => !project.personal).map(project => <a key={project.title} href="#work">{project.title}</a>)}</div>;
+  return <div className="brand-strip">{portfolio.map(project => <a key={project.title} href="#work">{project.title}</a>)}</div>;
 }
 
 function CaseStudyDialog({ caseStudy, onClose }) {
@@ -363,6 +363,7 @@ export default function App() {
       </header>
 
       <section className="hero" id="top">
+        <Velaris className="hero-velaris" />
         <div className="hero-copy">
           <p className="eyebrow">Independent digital studio · Pakistan / Worldwide</p>
           <h1>Your next chapter.<br /><em>Built with Volt.</em></h1>
@@ -384,7 +385,7 @@ export default function App() {
         <ClientShowcase />
       </section>
       <section className="section portfolio" id="work">
-        <div className="portfolio-heading"><div><p className="eyebrow">01 / Selected portfolio</p><h2>Good work.<br /><em>Built with purpose.</em></h2></div><p>Client partnerships and personal projects. Explore our storefronts, custom platforms and work in cybersecurity.</p></div>
+        <div className="portfolio-heading"><div><p className="eyebrow">01 / Client portfolio</p><h2>Good work.<br /><em>Built with purpose.</em></h2></div><p>Explore the storefronts and platforms we have built for our clients.</p></div>
         <div className="portfolio-grid">{portfolio.map((project,index) => <article className={`portfolio-card ${project.brandOnly ? "brand-project" : ""}`} key={project.title}>
           <button className="portfolio-visual" onClick={() => setSelectedCase(project)} aria-label={`View ${project.title} project`}>
             <img src={project.image} alt={project.alt} width="1348" height="926" loading="lazy" />
@@ -427,9 +428,9 @@ export default function App() {
       </section>
 
       <section className="section work" id="technical-work">
-        <div className="work-heading"><div className="section-label"><span>03</span><p>Technical projects</p></div><div className="work-title"><h2>Beyond the storefront.</h2><img className="work-logo" src="/h2svolt-logo.png" alt="" width="92" height="92" aria-hidden="true" /></div></div>
+        <div className="work-heading"><div className="section-label"><span>03</span><p>Case studies & explorations</p></div><div className="work-title"><h2>Ideas put to work.</h2><img className="work-logo" src="/h2svolt-logo.png" alt="" width="92" height="92" aria-hidden="true" /></div></div>
         <div className="case-list">
-          {caseStudies.slice(3).map((caseStudy, index) => (
+          {caseStudies.map((caseStudy, index) => (
             <article className="case-tile" key={caseStudy.title}>
               <button type="button" className="case-trigger" onClick={() => setSelectedCase(caseStudy)} aria-label={`Open ${caseStudy.title} case study`}>
                 <span className={caseStudy.cropRight ? "case-thumbnail crop-right" : "case-thumbnail"}>
@@ -513,7 +514,7 @@ export default function App() {
   <a href="/muhammad-sohaib-jaber/">About Muhammad Sohaib Jaber</a>
 </div></div>
         <div><b>Explore</b><a href="#services">Services</a><a href="#engagement">Engagements</a><a href="#work">Work</a><a href="#process">Process</a></div>
-        <div><b>Connect</b><a href="mailto:info@h2svolt.com">info@h2svolt.com</a><a href="https://www.linkedin.com/company/h2s-volt" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://www.linkedin.com/in/abdul-hadi-14a9462a5/" target="_blank" rel="noreferrer">Abdul Hadi Khan ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div>
+        <div><b>Connect</b><a href="mailto:info@h2svolt.com">info@h2svolt.com</a><a href="https://www.linkedin.com/company/h2s-volt" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div>
         <p className="copyright">© 2026 H2S VOLT. All rights reserved.</p>
       </footer>
     </main>
