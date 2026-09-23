@@ -67,7 +67,7 @@ void main() {
   gl_FragColor = vec4(col, 1.0);
 }`;
 
-const palette = ["#107663", "#13a3b5", "#1a4a70", "#06111d"]
+const palette = ["#43e889", "#16cde0", "#1d78bd", "#091c30"]
   .flatMap((hex) => [1, 3, 5].map((offset) => parseInt(hex.slice(offset, offset + 2), 16) / 255));
 
 export default function Velaris({ className = "" }) {
