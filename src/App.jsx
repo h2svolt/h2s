@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import "./index.css";
 
+const ArrowUpRight = () => <svg className="arrow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 19 19 5M8 5h11v11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+const SparkIcon = () => <svg className="spark-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>;
+
 const services = [
   ["01", "Web platforms", "Fast, secure web applications built around real business workflows and measurable outcomes."],
   ["02", "Shopify & ecommerce", "Brand-led storefronts, structured catalogues and considered shopping experiences, from product discovery to checkout."],
@@ -230,8 +233,8 @@ function CaseStudyDialog({ caseStudy, onClose }) {
           <h3 id="case-dialog-title">{caseStudy.title}</h3>
           <span id="case-dialog-description">{caseStudy.description}</span>
           {caseStudy.scope && <ul className="scope-list">{caseStudy.scope.map(item => <li key={item}>{item}</li>)}</ul>}
-          {caseStudy.url && <a href={caseStudy.url} target="_blank" rel="noreferrer">Visit website <b>↗</b></a>}
-          <a href="#contact" onClick={onClose}>Discuss your project <b>↗</b></a>
+          {caseStudy.url && <a href={caseStudy.url} target="_blank" rel="noreferrer">Visit website <b><ArrowUpRight /></b></a>}
+          <a href="#contact" onClick={onClose}>Discuss your project <b><ArrowUpRight /></b></a>
         </div>
       </article>
     </div>
@@ -354,7 +357,7 @@ export default function App() {
         <nav className="desktop-nav" aria-label="Main navigation">
           <a href="#work">Our work</a><a href="#services">Services</a><a href="#why">The studio</a><a href="#process">Process</a><a href="#contact">Contact</a>
         </nav>
-        <a className="header-cta" href="#contact">Start a project <span>↗</span></a>
+        <a className="header-cta" href="#contact">Start a project <span><ArrowUpRight /></span></a>
         <details className="mobile-menu">
           <summary aria-label="Open navigation"><span></span><span></span></summary>
           <nav><a href="#work">Our work</a><a href="#services">Services</a><a href="#why">The studio</a><a href="#process">Process</a><a href="#contact">Contact</a></nav>
@@ -366,11 +369,11 @@ export default function App() {
         <div className="hero-grain" aria-hidden="true" />
         <div className="hero-kicker">Independent digital studio <span>Pakistan / Worldwide</span></div>
         <div className="hero-bottom">
-          <h1 className="hero-title"><span>H2S</span> <span>VOLT</span><sup aria-hidden="true">✳</sup></h1>
+          <h1 className="hero-title"><span>H2S</span> <span>VOLT</span><sup aria-hidden="true"><SparkIcon /></sup></h1>
           <div className="hero-intro">
             <p>We build distinctive websites, ecommerce and software for ambitious brands. From the first idea to launch, we make digital work feel effortless.</p>
-            <a className="hero-contact" href="#contact">Start a project <span aria-hidden="true">↗</span></a>
-            <a className="hero-work-link" href="#work">Explore our work <span aria-hidden="true">↗</span></a>
+            <a className="hero-contact" href="#contact">Start a project <span><ArrowUpRight /></span></a>
+            <a className="hero-work-link" href="#work">Explore our work <ArrowUpRight /></a>
           </div>
         </div>
       </section>
@@ -383,7 +386,7 @@ export default function App() {
         <div className="portfolio-grid">{portfolio.map((project,index) => <article className={`portfolio-card ${project.brandOnly ? "brand-project" : ""}`} key={project.title}>
           <button className="portfolio-visual" onClick={() => setSelectedCase(project)} aria-label={`View ${project.title} project`}>
             <img src={project.image} alt={project.alt} width="1348" height="926" loading="lazy" />
-            <span className="view-project">View project ↗</span>
+            <span className="view-project">View project <ArrowUpRight /></span>
           </button>
           <div className="portfolio-meta"><div><p>{project.eyebrow}</p><h3><button onClick={() => setSelectedCase(project)}>{project.title}</button></h3></div><span className="project-number">{String(index+1).padStart(2,"0")}</span></div>
           <p className="portfolio-description">{project.description}</p>
@@ -396,7 +399,7 @@ export default function App() {
         <div className="services-layout">
           <div className="service-list">
             {services.map(([number, title, copy]) => (
-              <article key={number}><span>{number}</span><h2>{title}</h2><p>{copy}</p><a href="#contact" aria-label={`Discuss ${title}`}>↗</a></article>
+              <article key={number}><span>{number}</span><h2>{title}</h2><p>{copy}</p><a href="#contact" aria-label={`Discuss ${title}`}><ArrowUpRight /></a></article>
             ))}
           </div>
           <figure className="editorial-image">
@@ -407,7 +410,7 @@ export default function App() {
       </section>
 
       <section className="section extension" id="why">
-        <div className="extension-statement"><p className="eyebrow">The people behind the pixels</p><h2>A small team. Invested in your big picture.</h2><p>Work directly with the people designing and building your product. We connect the visual details with the practical needs of your business, from the first conversation through launch and support.</p><div className="founder-intro" id="hamza-yousuf"><p className="eyebrow">Co-founder</p><h3>Hamza Yousuf</h3><p>Hamza Yousuf is a co-founder of H2S VOLT, our software development and cybersecurity company based in Pakistan.</p><a href="/hamza-yousuf/">Meet Hamza Yousuf ↗</a><a href="https://www.linkedin.com/in/hamza-yousuf-h2svolt" target="_blank" rel="me noreferrer">Hamza on LinkedIn ↗</a></div><div className="founder-intro" id="muhammad-sohaib-jaber"><p className="eyebrow">Co-founder</p><h3>Muhammad Sohaib Jaber</h3><p>Muhammad Sohaib Jaber is a co-founder of H2S VOLT, our software development and cybersecurity company based in Pakistan.</p><a href="/muhammad-sohaib-jaber/">Meet Muhammad Sohaib Jaber ↗</a><a href="https://www.linkedin.com/in/muhammad-sohaib-jaber-306b29218/" target="_blank" rel="me noreferrer">Sohaib on LinkedIn ↗</a></div></div>
+        <div className="extension-statement"><p className="eyebrow">The people behind the pixels</p><h2>A small team. Invested in your big picture.</h2><p>Work directly with the people designing and building your product. We connect the visual details with the practical needs of your business, from the first conversation through launch and support.</p><div className="founder-intro" id="hamza-yousuf"><p className="eyebrow">Co-founder</p><h3>Hamza Yousuf</h3><p>Hamza Yousuf is a co-founder of H2S VOLT, our software development and cybersecurity company based in Pakistan.</p><a href="/hamza-yousuf/">Meet Hamza Yousuf <ArrowUpRight /></a><a href="https://www.linkedin.com/in/hamza-yousuf-h2svolt" target="_blank" rel="me noreferrer">Hamza on LinkedIn <ArrowUpRight /></a></div><div className="founder-intro" id="muhammad-sohaib-jaber"><p className="eyebrow">Co-founder</p><h3>Muhammad Sohaib Jaber</h3><p>Muhammad Sohaib Jaber is a co-founder of H2S VOLT, our software development and cybersecurity company based in Pakistan.</p><a href="/muhammad-sohaib-jaber/">Meet Muhammad Sohaib Jaber <ArrowUpRight /></a><a href="https://www.linkedin.com/in/muhammad-sohaib-jaber-306b29218/" target="_blank" rel="me noreferrer">Sohaib on LinkedIn <ArrowUpRight /></a></div></div>
         <div className="advantage-grid">
           <article><span>01</span><h3>Direct engineer access</h3><p>Work with the people building your product—not layers of account management.</p></article>
           <article><span>02</span><h3>Timezone alignment</h3><p>We agree productive overlap for decisions, demonstrations and collaboration.</p></article>
@@ -418,7 +421,7 @@ export default function App() {
 
       <section className="section engagement" id="engagement">
         <div className="section-label"><span>02</span><p>Engagement models</p></div>
-        <div className="model-grid">{models.map(([title, copy], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p><a href="#contact">Discuss this model ↗</a></article>)}</div>
+        <div className="model-grid">{models.map(([title, copy], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p><a href="#contact">Discuss this model <ArrowUpRight /></a></article>)}</div>
       </section>
 
       <section className="section work" id="technical-work">
@@ -469,7 +472,7 @@ export default function App() {
       </section>
 
       <section className="contact" id="contact">
-        <div className="contact-intro"><p className="eyebrow">Start with a conversation</p><h2>Have something in mind? Let’s build it.</h2><p>Tell us what you need to achieve. We’ll send an immediate confirmation and reply within one business day with the right questions and a practical next step.</p><div className="contact-links"><a href="mailto:info@h2svolt.com">info@h2svolt.com ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div></div>
+        <div className="contact-intro"><p className="eyebrow">Start with a conversation</p><h2>Have something in mind? Let’s build it.</h2><p>Tell us what you need to achieve. We’ll send an immediate confirmation and reply within one business day with the right questions and a practical next step.</p><div className="contact-links"><a href="mailto:info@h2svolt.com">info@h2svolt.com <ArrowUpRight /></a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp <ArrowUpRight /></a></div></div>
         <form onSubmit={handleProjectSubmit}>
           <label className="honeypot" aria-hidden="true">Company website<input name="company" tabIndex="-1" autoComplete="off" /></label>
           <label>Name<input name="name" required placeholder="Your name" /></label>
@@ -480,7 +483,7 @@ export default function App() {
           {formPhase > 0 && <div className="submit-sequence" aria-live="polite"><span className={formPhase >= 1 ? "active" : ""}>Brief prepared</span><span className={formPhase >= 2 ? "active" : ""}>Sending securely</span><span className={formPhase >= 3 ? "active" : ""}>Reply queued</span></div>}
           {formError && <p className="form-error" role="alert">{formError}</p>}
           <button type="submit" disabled={formPhase > 0 && formPhase < 4}>
-            {formPhase === 0 && <>Send project brief <span>↗</span></>}{formPhase === 1 && "Preparing your brief…"}{formPhase === 2 && "Sending your enquiry…"}{formPhase === 3 && "Preparing your confirmation…"}{formPhase === 4 && <>Message sent — check your inbox <span>✓</span></>}
+            {formPhase === 0 && <>Send project brief <span><ArrowUpRight /></span></>}{formPhase === 1 && "Preparing your brief…"}{formPhase === 2 && "Sending your enquiry…"}{formPhase === 3 && "Preparing your confirmation…"}{formPhase === 4 && <>Message sent — check your inbox <span>✓</span></>}
           </button>
         </form>
       </section>
@@ -494,7 +497,7 @@ export default function App() {
     target="_blank"
     rel="author me noreferrer"
   >
-    Hamza Yousuf · Co-Founder ↗
+    Hamza Yousuf · Co-Founder <ArrowUpRight />
   </a>
   <a href="/hamza-yousuf/">About Hamza Yousuf</a>
 
@@ -503,13 +506,13 @@ export default function App() {
     target="_blank"
     rel="author me noreferrer"
   >
-    Muhammad Sohaib Jaber · Co-Founder ↗
+    Muhammad Sohaib Jaber · Co-Founder <ArrowUpRight />
   </a>
   <a href="/muhammad-sohaib-jaber/">About Muhammad Sohaib Jaber</a>
 </div></div>
         <div><b>Explore</b><a href="#services">Services</a><a href="#engagement">Engagements</a><a href="#work">Work</a><a href="#process">Process</a></div>
-        <div><b>Connect</b><a href="mailto:info@h2svolt.com">info@h2svolt.com</a><a href="https://www.linkedin.com/company/h2s-volt" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div>
-        <div className="footer-wordmark" aria-hidden="true">H2S VOLT<span>✳</span></div>
+        <div><b>Connect</b><a href="mailto:info@h2svolt.com">info@h2svolt.com</a><a href="https://www.linkedin.com/company/h2s-volt" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight /></a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp <ArrowUpRight /></a></div>
+        <div className="footer-wordmark" aria-hidden="true">H2S VOLT<span><SparkIcon /></span></div>
         <p className="copyright">© 2026 H2S VOLT. All rights reserved.</p>
       </footer>
     </main>

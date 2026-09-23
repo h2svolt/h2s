@@ -179,3 +179,12 @@ footer{background:#0e1411;border-top:1px solid #36473a}
 .footer-wordmark{grid-column:1/-1;font-size:clamp(80px,12.5vw,250px);font-weight:600;line-height:.8;letter-spacing:-.085em;white-space:nowrap;color:#eeeedd;margin:70px 0 0}
 .footer-wordmark span{font-size:.25em;vertical-align:top;letter-spacing:0;color:#bcecc9;margin-left:.1em}
 @media(max-width:760px){.clients-section{padding:25px 6%}.portfolio{padding:75px 6% 85px}.portfolio-heading{margin-bottom:38px}.portfolio-heading h2{font-size:clamp(50px,12vw,76px)}.portfolio-grid{gap:48px}.portfolio-visual{padding:8px;border-radius:14px}.portfolio-visual img{border-radius:8px}.portfolio-meta h3{font-size:28px}.services{padding:78px 6%}.extension{margin:0 4%;padding:55px 6%}.engagement,.work,.faq{padding-top:75px;padding-bottom:80px}.work-heading{margin-bottom:34px}.process{padding:75px 6%}.assurance{padding:70px 6%}.contact{margin:0 4% 55px;padding:45px 6%;border-radius:18px}.footer-wordmark{font-size:13vw;margin-top:35px}}
+
+/* SVG marks render consistently across mobile platforms. */
+.arrow-icon{display:inline-block;width:1em;height:1em;vertical-align:-.12em;flex:none}
+.spark-icon{display:block;width:1em;height:1em}
+.hero-contact .arrow-icon{width:20px;height:20px}
+.hero-work-link .arrow-icon{width:14px;height:14px;margin-left:4px}
+.hero-title sup .spark-icon{width:1em;height:1em}
+.footer-wordmark span{display:inline-block;vertical-align:top}
+.footer-wordmark .spark-icon{width:1em;height:1em}
