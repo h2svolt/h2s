@@ -108,3 +108,74 @@
 @media(max-width:760px){.site-header{height:78px;padding:0 6%}.site-header .header-cta{display:none}.hero{height:100svh;min-height:680px;padding:145px 6% 7%}.hero-scene{background-position:48% center}.hero::before{background:linear-gradient(180deg,#070a0d91,transparent 28%,#070a0d80 58%,#070a0de8)}.hero-kicker{top:108px;left:6%;max-width:85%;font-size:10px;line-height:1.6}.hero-kicker span{display:block;margin:0}.hero-bottom{display:block}.hero .hero-title{font-size:clamp(64px,15vw,112px);letter-spacing:-.08em;gap:.12em;margin-bottom:32px}.hero-intro{max-width:390px}.hero-intro p{font-size:16px;line-height:1.5}.hero-contact{font-size:14px}.hero-contact span{width:38px;height:38px}}
 @media(max-width:390px){.hero .hero-title{font-size:14.5vw}}
 @media(prefers-reduced-motion:reduce){.hero-scene,.hero-title span,.hero-title sup{animation:none}}
+
+/* Carry the hero's editorial palette through the homepage. */
+.clients-section{background:#111714;border-color:#374039;padding:34px 5% 39px}
+.clients-section .eyebrow{color:#b3c5b6}
+.brand-strip a{color:#eeefdf}
+.brand-strip a:hover{color:#b9efce}
+.portfolio{max-width:none;padding:110px max(5%,calc((100vw - 1440px)/2)) 120px;background:#eeefe4;color:#121a16}
+.portfolio .eyebrow{color:#346448}
+.portfolio-heading{margin-bottom:62px}
+.portfolio-heading h2{font-size:clamp(54px,6vw,102px);line-height:.94;letter-spacing:-.07em;font-weight:600}
+.portfolio-heading h2 em{color:#386c53}
+.portfolio-heading>p,.portfolio-description{color:#536057}
+.portfolio-heading>p{font-size:18px;line-height:1.55}
+.portfolio-grid{gap:72px 34px}
+.portfolio-visual,.portfolio-card:nth-child(2) .portfolio-visual,.portfolio-card:nth-child(3) .portfolio-visual,.portfolio-card:nth-child(4) .portfolio-visual{padding:12px;border:1px solid #cbd1c6;border-radius:20px;background:#dce1d7;box-shadow:0 18px 50px #17231812}
+.portfolio-visual img{border-radius:11px}
+.portfolio-meta h3{font-size:34px;font-weight:600;letter-spacing:-.05em}
+.portfolio-meta p,.project-number{color:#506056}
+.project-tags span{border-color:#c3cbbf;color:#405549;border-radius:999px;padding:8px 13px}
+.view-project{border-radius:999px;background:#f1f1e8;color:#14201a}
+.services{max-width:none;padding:110px max(5%,calc((100vw - 1440px)/2));background:#131a17;border:0}
+.section-label,.eyebrow{color:#b8e5c2}
+.section-label>span{color:#84958a}
+.service-list article{border-color:#405046;padding:31px 0}
+.service-list h2{font-size:clamp(28px,2.8vw,43px);font-weight:500;letter-spacing:-.045em;color:#eeefe4}
+.service-list p{color:#b6c1b8}
+.service-list a,.model-grid a{color:#b9ebc9}
+.editorial-image{border-radius:22px}
+.extension{margin:0 auto;max-width:1440px;border-radius:0;background:#222d27;padding:85px 5%}
+.extension h2{font-size:clamp(40px,4.4vw,69px);font-weight:600;letter-spacing:-.06em;color:#f0f1e6}
+.extension-statement>p,.extension-statement>p:last-child,.advantage-grid p,.founder-intro>p:not(.eyebrow){color:#bac6bd}
+.founder-intro,.advantage-grid article{border-color:#54635a}
+.founder-intro a{color:#c4eed0}
+.engagement{padding-top:110px;padding-bottom:110px}
+.model-grid article,.process-grid article{border-color:#4a584d}
+.model-grid h3,.process-grid h3{color:#f1f2e5}
+.work{padding-top:100px;padding-bottom:120px}
+.work h2{font-size:clamp(44px,5.3vw,82px);font-weight:600;letter-spacing:-.06em}
+.work-heading{margin-bottom:50px}
+.case-list{gap:25px}
+.case-trigger{border-color:#46584b;border-radius:18px;background:#202b24;transition:transform .3s,box-shadow .3s}
+.case-trigger:hover{transform:translateY(-5px);box-shadow:0 22px 45px #0005}
+.case-tile-copy strong{color:#f0f1e6;font-size:27px;font-weight:600;letter-spacing:-.04em}
+.case-tile-copy small{color:#bbcabd}
+.case-tile-copy i{color:#b9ebc9}
+.process{max-width:none;padding:100px max(5%,calc((100vw - 1440px)/2));background:#e8eade;color:#142018;border:0}
+.process .section-label{color:#416a4b}
+.process-heading h2{font-size:clamp(44px,5vw,76px);font-weight:600;letter-spacing:-.06em}
+.process-grid article{border-color:#b9c4b9}
+.process-grid article>span{color:#3a6a4a}
+.process-grid h3{color:#18251b}
+.process-grid p{color:#526153}
+.assurance{background:#202b25;padding:85px max(5%,calc((100vw - 1440px)/2))}
+.assurance h2{font-size:clamp(39px,4vw,67px);font-weight:600;letter-spacing:-.055em;color:#f0f1e6}
+.assurance-grid article{border-color:#566459}
+.assurance-grid h3{color:#f0f1e6}
+.faq{padding-top:110px;padding-bottom:115px}
+.faq h2{font-size:clamp(38px,4vw,68px);font-weight:600;letter-spacing:-.06em}
+.faq details{border-color:#435347}
+.faq summary span{color:#b9ebc9}
+.contact{max-width:1440px;margin:0 auto 80px;padding:70px 5%;border-radius:25px;background:#e8eade;color:#172119}
+.contact .eyebrow{color:#406a4b}
+.contact h2{font-size:clamp(40px,4.3vw,72px);font-weight:600;letter-spacing:-.06em}
+.contact-intro>p:not(.eyebrow){color:#536153}
+.contact input,.contact select,.contact textarea{background:#f7f8f2;border:1px solid #bdc8bb;border-radius:9px;color:#16231b}
+.contact form>button{background:#17221b;color:#f5f6ec;border-radius:999px;padding:18px 22px}
+.contact form>button:hover{background:#315f43}
+footer{background:#0e1411;border-top:1px solid #36473a}
+.footer-wordmark{grid-column:1/-1;font-size:clamp(80px,12.5vw,250px);font-weight:600;line-height:.8;letter-spacing:-.085em;white-space:nowrap;color:#eeeedd;margin:70px 0 0}
+.footer-wordmark span{font-size:.25em;vertical-align:top;letter-spacing:0;color:#bcecc9;margin-left:.1em}
+@media(max-width:760px){.clients-section{padding:25px 6%}.portfolio{padding:75px 6% 85px}.portfolio-heading{margin-bottom:38px}.portfolio-heading h2{font-size:clamp(50px,12vw,76px)}.portfolio-grid{gap:48px}.portfolio-visual{padding:8px;border-radius:14px}.portfolio-visual img{border-radius:8px}.portfolio-meta h3{font-size:28px}.services{padding:78px 6%}.extension{margin:0 4%;padding:55px 6%}.engagement,.work,.faq{padding-top:75px;padding-bottom:80px}.work-heading{margin-bottom:34px}.process{padding:75px 6%}.assurance{padding:70px 6%}.contact{margin:0 4% 55px;padding:45px 6%;border-radius:18px}.footer-wordmark{font-size:13vw;margin-top:35px}}
