@@ -509,6 +509,7 @@ export default function App() {
 </div></div>
         <div><b>Explore</b><a href="#services">Services</a><a href="#engagement">Engagements</a><a href="#work">Work</a><a href="#process">Process</a></div>
         <div><b>Connect</b><a href="mailto:info@h2svolt.com">info@h2svolt.com</a><a href="https://www.linkedin.com/company/h2s-volt" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://wa.me/923368048644" target="_blank" rel="noreferrer" aria-label="Contact H2S VOLT on WhatsApp">WhatsApp ↗</a></div>
+        <div className="footer-wordmark" aria-hidden="true">H2S VOLT<span>✳</span></div>
         <p className="copyright">© 2026 H2S VOLT. All rights reserved.</p>
       </footer>
     </main>
