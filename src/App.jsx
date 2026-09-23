@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import Velaris from "./Velaris";
 import "./index.css";
 
 const services = [
@@ -363,22 +362,17 @@ export default function App() {
       </header>
 
       <section className="hero" id="top">
-        <Velaris className="hero-velaris" />
-        <div className="hero-copy">
-          <p className="eyebrow">Independent digital studio · Pakistan / Worldwide</p>
-          <h1>Your next chapter.<br /><em>Built with Volt.</em></h1>
-          <p className="hero-lead">Distinctive websites. Thoughtful software. We turn ambitious ideas into digital experiences your customers remember.</p>
-          <div className="hero-actions">
-            <a className="button button-primary" href="#work">Explore our work <span>↗</span></a>
-            <a className="button button-secondary" href="#contact">Tell us your idea</a>
+        <div className="hero-scene" aria-hidden="true" />
+        <div className="hero-grain" aria-hidden="true" />
+        <div className="hero-kicker">Independent digital studio <span>Pakistan / Worldwide</span></div>
+        <div className="hero-bottom">
+          <h1 className="hero-title"><span>H2S</span> <span>VOLT</span><sup aria-hidden="true">✳</sup></h1>
+          <div className="hero-intro">
+            <p>We build distinctive websites, ecommerce and software for ambitious brands. From the first idea to launch, we make digital work feel effortless.</p>
+            <a className="hero-contact" href="#contact">Start a project <span aria-hidden="true">↗</span></a>
+            <a className="hero-work-link" href="#work">Explore our work <span aria-hidden="true">↗</span></a>
           </div>
-          <div className="hero-notes"><span>Design</span><span>Development</span><span>Ongoing support</span></div>
         </div>
-        <button className="hero-project" onClick={() => setSelectedCase(portfolio[0])} aria-label="View Y-SCENTS project">
-          <span className="project-window"><span>Selected project / 01</span><span>yscents.store ↗</span></span>
-          <img src="/portfolio/yscents.webp" alt="The Y-SCENTS website designed by H2S VOLT" width="1348" height="926" fetchPriority="high" />
-          <span className="hero-project-caption"><strong>Y-SCENTS</strong><span>Fragrance, expressed digitally.</span></span>
-        </button>
       </section>
       <section className="clients-section" id="clients" aria-label="Selected client brands">
         <p className="eyebrow">Different brands. Shared ambition.</p>
