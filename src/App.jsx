@@ -12,6 +12,7 @@ const services = [
   ["04", "Custom software", "Purpose-built systems that remove friction, automate work and support growth."],
   ["05", "Cybersecurity", "Security reviews, penetration testing and safer engineering practices from the start."],
   ["06", "Dedicated product teams", "A focused remote team that works as a dependable extension of your business."],
+  ["07", "Digital marketing", "Search, paid campaigns and content strategies that help the right audience find your brand and turn interest into enquiries."],
 ];
 
 const models = [
