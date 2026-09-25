@@ -188,3 +188,7 @@ footer{background:#0e1411;border-top:1px solid #36473a}
 .hero-title sup .spark-icon{width:1em;height:1em}
 .footer-wordmark span{display:inline-block;vertical-align:top}
 .footer-wordmark .spark-icon{width:1em;height:1em}
+
+/* Preserve the full case study artwork at every screen width. */
+.case-thumbnail{height:auto}
+.case-thumbnail img{width:100%;height:auto;object-fit:contain}
